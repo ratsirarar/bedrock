@@ -161,7 +161,23 @@ a.more {
             }
         }
     }
+}
 
+// mozID visual style
+// full width rows w/differing bg colors
+.mozID {
+    #outer-wrapper {
+        // default to rays?
+        background: #fff;
+    }
+
+    #wrapper {
+        width: 100%;
+
+        .container {
+            width: @widthDesktop;
+        }
+    }
 }
 
 h1, h2, h3, h4, h5, h6, legend, .huge, .large, legend {
@@ -1056,6 +1072,10 @@ nav.menu-bar {
       width: @widthTablet;
     }
 
+    .mozID #wrapper .container {
+        width: @widthTablet;
+    }
+
     #masthead,
     #main-feature,
     #main-content,
@@ -1142,6 +1162,10 @@ nav.menu-bar {
 
     #wrapper {
       width: @widthMobile;
+    }
+
+    .mozID #wrapper .container {
+        width: @widthMobile;
     }
 
     #masthead,
@@ -1479,6 +1503,9 @@ nav.menu-bar {
         }
     }
 
+    .mozID #wrapper .container {
+        width: @widthMobileLandscape;
+    }
 }
 /* }}} */
 
