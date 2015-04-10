@@ -233,7 +233,7 @@
     });
 
     //track GA event for newsletter CTA
-    trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'click', cta]);
+    window.trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'click', cta]);
   });
 
   $('#sign-up-form-close').on('click', function() {
@@ -256,7 +256,7 @@
     });
 
     //track GA event for get a phone CTA
-    trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'click', 'Get a Phone']);
+    window.trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'click', 'Get a Phone']);
   });
 
   // toggle sticky masthead when tabzilla is opened/closed
@@ -367,7 +367,7 @@
   // tracks click even on nav link, and pauses scroll tracking momentarily
   function navClickGATrack(section_hash) {
     //track GA event for nav clicks
-    trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'nav click', section_hash]);
+    window.trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'nav click', section_hash]);
 
     // do not track while page is flying around
     pause_ga_tracking = true;
@@ -652,7 +652,7 @@
       e.preventDefault();
 
       //track GA event for monitoring if users are clicking on animated scroller
-      trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'click', 'Adaptive animated scroll arrows']);
+      window.trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'click', 'Adaptive animated scroll arrows']);
     });
   }
 
@@ -704,7 +704,7 @@
 
     $('#adapt-feature-sprite-plus').on(click_event, function(e) {
       e.preventDefault();
-      trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'click', 'Adaptive sprite plus']);
+      window.trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'click', 'Adaptive sprite plus']);
     });
   }
 

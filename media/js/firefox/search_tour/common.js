@@ -6,16 +6,17 @@
     'use strict';
 
     function trackClick(e, href, label, newTab) {
+        window.dataLayer = window.dataLayer || [];
         var callback;
 
         if (newTab) {
-            gaTrack(['_trackEvent', 'whatsnew srch-chg interactions', 'All', label]);
+            window.gaTrack(['_trackEvent', 'whatsnew srch-chg interactions', 'All', label]);
         } else {
             e.preventDefault();
             callback = function() {
                 window.location = href;
             };
-            gaTrack(['_trackEvent', 'whatsnew srch-chg interactions', 'All', label], callback);
+            window.gaTrack(['_trackEvent', 'whatsnew srch-chg interactions', 'All', label], callback);
         }
     }
 
@@ -26,7 +27,7 @@
             var goToAccounts = function () {
                 Mozilla.UITour.showFirefoxAccounts();
             };
-            gaTrack(['_trackEvent', 'whatsnew srch-chg interactions', 'All', 'syncButton'], goToAccounts);
+            window.gaTrack(['_trackEvent', 'whatsnew srch-chg interactions', 'All', 'syncButton'], goToAccounts);
         });
     });
 

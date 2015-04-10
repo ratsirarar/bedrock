@@ -43,7 +43,7 @@
 
             if (fxMasterVersion >= 31) {
 
-                // Set syncCapable so we know not to call gaTrack()
+                // Set syncCapable so we know not to call window.gaTrack()
                 // again later
                 syncCapable = true;
 
@@ -64,7 +64,7 @@
 
                     // Call GA tracking here to ensure it waits for the
                     // getConfiguration async call
-                    gaTrack(['_trackEvent', '/sync/ Page Interactions', 'load', state]);
+                    window.gaTrack(['_trackEvent', '/sync/ Page Interactions', 'load', state]);
 
                 });
 
@@ -90,42 +90,43 @@
     // Send page state to GA if it hasn't already been sent in the
     // getConfiguration callback
     if (syncCapable === false) {
-        gaTrack(['_trackEvent', '/sync/ Page Interactions', 'load', state]);
+        window.gaTrack(['_trackEvent', '/sync/ Page Interactions', 'load', state]);
     }
 
     var trackClick = function (eventObj, element, event) {
+        window.dataLayer = window.dataLayer || [];
         event.preventDefault();
         eventObj.eventCallback = function() {
-                window.location = element.href;};
-        window.dataLayer = window.dataLayer || [];
+                window.location = element.href;
+            };
         window.dataLayer.push(eventObj);
     };
 
     // Setup GA tracking for Firefox download button
     $('#cta-firefox, .download-button .download-link').on('click', function(e) {
-        trackClick({event: 'firefox-downloads', 
-            interaction: 'download click', 
+        trackClick({event: 'firefox-downloads',
+            interaction: 'download click',
             downloadVersion: 'Firefox'}, this, e);
     });
 
     // Setup GA tracking for Firefox update button
     $('#cta-update').on('click', function(e) {
-        trackClick({event: 'firefox-downloads', 
-            interaction: 'update click', 
+        trackClick({event: 'firefox-downloads',
+            interaction: 'update click',
             downloadVersion: 'Firefox'}, this, e);
     });
 
     // Setup GA tracking for Firefox for primary Android download button
     $('#cta-android').on('click', function(e) {
-        trackClick({event: 'firefox-downloads', 
-            interaction: 'top', 
+        trackClick({event: 'firefox-downloads',
+            interaction: 'top',
             downloadVersion: 'Firefox for Android'}, this, e);
     });
 
     // Setup GA tracking for Firefox for Android footer download button
     $('#cta-android-footer').on('click', function(e) {
-        trackClick({event: 'firefox-downloads', 
-            interaction: 'bottom', 
+        trackClick({event: 'firefox-downloads',
+            interaction: 'bottom',
             downloadVersion: 'Firefox for Android'}, this, e);
     });
 

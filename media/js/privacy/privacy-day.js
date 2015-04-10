@@ -30,12 +30,13 @@ $(function() {
     $('#button-nav-wrapper').waypoint('sticky');
 
     var trackClick = function (gaArgs, href, event) {
+        window.dataLayer = window.dataLayer || [];
         if (event.metaKey || event.ctrlKey) {
             // Open link in new tab
-            gaTrack(gaArgs);
+            window.gaTrack(gaArgs);
         } else {
             event.preventDefault();
-            gaTrack(gaArgs, function() { window.location = href; });
+            window.gaTrack(gaArgs, function() { window.location = href; });
         }
     };
 
@@ -43,7 +44,7 @@ $(function() {
     $('#tips-nav-direct a').on('click', function() {
         var thisTabName = $(this).attr('href');
         console.log(thisTabName);
-        gaTrack([
+        window.gaTrack([
             '_trackEvent',
             '/privacy/ Interactions',
             thisTabName.substr(1), // strip # char from tab hash
@@ -75,7 +76,7 @@ $(function() {
     $('.tip-footer .next a').on('click', function(e) {
         e.preventDefault();
         pager.nextPageWithAnimation();
-        gaTrack([
+        window.gaTrack([
             '_trackEvent',
             '/privacy/ Interactions',
             pager.currentPage.id,
@@ -87,7 +88,7 @@ $(function() {
     $('.tip-footer .previous a').on('click', function(e) {
         e.preventDefault();
         pager.prevPageWithAnimation();
-        gaTrack([
+        window.gaTrack([
             '_trackEvent',
             '/privacy/ Interactions',
             pager.currentPage.id,

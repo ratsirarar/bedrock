@@ -145,7 +145,7 @@
                             } catch (ex) {}
                         }
 
-                        gaTrack(['_trackEvent', 'FxOs Consumer Page', 'Indian Language Selection', language], function() {
+                        window.gaTrack(['_trackEvent', 'FxOs Consumer Page', 'Indian Language Selection', language], function() {
                             if (language !== 'English') {
                                 window.location = $target.attr('href');
                             }
@@ -171,7 +171,7 @@
             window.location = href;
         };
 
-        trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'Get A Phone Exit', $this.text()], callback);
+        window.trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'Get A Phone Exit', $this.text()], callback);
     }
 
     /*
@@ -214,23 +214,8 @@
 
     window.trackGAEvent = function (eventsArray, callback) {
         if (!pause_ga_tracking) {
-            var timer = null;
-            var hasCallback = typeof(callback) == 'function';
-            var gaCallback = function () {
-                clearTimeout(timer);
-                callback();
-            };
-
-            if (typeof(window._gaq) == 'object') {
-                if (hasCallback) {
-                    timer = setTimeout(gaCallback, 500);
-                    window._gaq.push(eventsArray, gaCallback);
-                } else {
-                    window._gaq.push(eventsArray);
-                }
-            } else if (hasCallback) {
-                callback();
-            }
+            window.dataLayer = window.dataLayer || [];
+            window.gaTrack(eventsArray, callback);
         }
     };
 
@@ -242,7 +227,7 @@
         };
 
         //track GA event for useful links
-        trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'click', this.href], callback);
+        window.trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'click', this.href], callback);
     });
 
     $script('//geo.mozilla.org/country.js', function() {

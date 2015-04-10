@@ -274,16 +274,15 @@
             }
         }
     }
-    
+
     var trackClick = function (gaObj, event) {
         window.dataLayer = window.dataLayer || [];
         if (event.metaKey || event.ctrlKey) {
             // Open link in new tab
-            window.dataLayer.push(gaObj);
+            window.gaTrack(gaObj);
         } else {
             event.preventDefault();
-            gaObj.eventCallback = function() { window.location = event.target.href;};
-            window.dataLayer.push(gaObj);
+            window.gaTrack(gaObj, function() { window.location = event.target.href;});
         }
     };
 
@@ -294,12 +293,12 @@
 
     // track link on the secondary CTA
     $('#subscribe-download-wrapper .dl-button').on('click', function(event) {
-        trackClick({event: 'firefox-downloads', interaction: 'button download click', downloadVersion: 'Firefox for Android'}, event);        
+        trackClick({event: 'firefox-downloads', interaction: 'button download click', downloadVersion: 'Firefox for Android'}, event);
     });
 
     // track links except the accordion
     $('#privacy, #sync, #subscribe-download-wrapper ul').on('click', 'a', function(event) {
-        trackClick({event: 'firefox-downloads', interaction: 'link click', downloadVersion: $(this).attr('href')}, event);                
+        trackClick({event: 'firefox-downloads', interaction: 'link click', downloadVersion: $(this).attr('href')}, event);
     });
 
     // track accordion interactions
@@ -315,9 +314,9 @@
         }[$(this).attr('id')];
 
         $(this).on('expand', '[role="tabpanel"]', function() {
-            gaTrack(['_trackEvent', '/android/ Interactions', 'open', section]);
+            window.gaTrack(['_trackEvent', '/android/ Interactions', 'open', section]);
         }).on('collapse', '[role="tabpanel"]', function() {
-            gaTrack(['_trackEvent', '/android/ Interactions', 'close', section]);
+            window.gaTrack(['_trackEvent', '/android/ Interactions', 'close', section]);
         }).on('click', 'a', function(event) {
             interaction = $(this).hasClass('see-how') ? 'see how it works link click' : 'learn more link click';
             trackClick(['_trackEvent', '/android/ Interactions', interaction, section], event);
@@ -334,7 +333,7 @@
         }[$(this).attr('id')];
 
         if (section && direction === 'down') {
-            gaTrack(['_trackEvent', '/android/ Interactions', 'scroll', section]);
+            window.gaTrack(['_trackEvent', '/android/ Interactions', 'scroll', section]);
         }
     });
 

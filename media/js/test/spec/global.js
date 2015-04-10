@@ -330,7 +330,7 @@ describe('global.js', function() {
 
         /* For this test suite we use fake timers, which provides
          * synchronous implementation of setTimeout. Seems a little
-         * waiting is needed when testing a push to window._gaq */
+         * waiting is needed when testing a push to window.dataLayer */
         beforeEach(function () {
             clock = sinon.useFakeTimers();
             evt = {event: 'GA Track Event', action: 'GA event test', label: 'test', value:'test'};

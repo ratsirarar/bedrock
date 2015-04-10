@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-;(function($, Modernizr, _gaq, site) {
+;(function($, Modernizr, dataLayer, site) {
     'use strict';
 
     var $window = $(window);
@@ -112,8 +112,8 @@
             state = 'Desktop, Firefox not up-to-date';
         }
     }
-    window._gaq = _gaq || [];
-    window._gaq.push(['_setCustomVar', 4, '/new conditional message', state, 3]);
+    dataLayer = dataLayer || [];
+    window.gaTrack(['_setCustomVar', 4, '/new conditional message', state, 3]);
 
     // conditions in which scene2 should not be shown, even when the
     // #download-fx hash is set
@@ -313,4 +313,4 @@
         });
     });
 
-})(window.jQuery, window.Modernizr, window._gaq, window.site);
+})(window.jQuery, window.Modernizr, window.dataLayer = window.dataLayer || [], window.site);

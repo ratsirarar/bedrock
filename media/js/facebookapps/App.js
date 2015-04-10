@@ -101,8 +101,8 @@ DOWNLOADTAB.classes.App = (function (singleton) {
                 self.theater.showScene(2);
             }
 
-            if (self.window._gaq) {
-                self.window._gaq.push(['_trackPageview', self.virtualUrl]);
+            if (self.window.gaTrack) {
+                self.window.gaTrack(['_trackPageview', self.virtualUrl]);
             }
 
             // Delay download so window.location redirect doesn't interrupt

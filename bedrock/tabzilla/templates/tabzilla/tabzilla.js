@@ -349,25 +349,16 @@ var Tabzilla = (function (Tabzilla) {
     };
     Infobar.prototype.trackEvent = function (action, label, value,
                                              nonInteraction, callback) {
-        if (typeof(_gaq) !== 'object') {
+        window.dataLayer = window.dataLayer || [];
+        if (typeof(window.gaTrack) !== 'function') {
             return;
         }
 
         // The 5th value and 6th nonInteraction parameters are optional.
         // See the Google Analytics Developer Guide for details:
         // https://developers.google.com/analytics/devguides/collection/gajs/eventTrackerGuide
-        window._gaq.push(['_trackEvent', 'Tabzilla - ' + this.name, action,
-                          label, value || 0, nonInteraction || false]);
-
-        if (callback) {
-            var timer = null;
-            var _callback = function () {
-                clearTimeout(timer);
-                callback();
-            };
-            timer = setTimeout(_callback, 500);
-            window._gaq.push(_callback);
-        }
+        window.gaTrack(['_trackEvent', 'Tabzilla - ' + this.name, action,
+                          label, value || 0, nonInteraction || false], callback);
     };
     Infobar.prototype.onshow = {};
     Infobar.prototype.onaccept = {};

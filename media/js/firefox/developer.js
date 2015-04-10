@@ -18,12 +18,13 @@ function onYouTubeIframeAPIReady() {
 
 
     var trackClick = function (gaArgs, href, event) {
+        window.dataLayer = window.dataLayer || [];
         if (event.metaKey || event.ctrlKey) {
             // Open link in new tab
-            gaTrack(gaArgs);
+            window.gaTrack(gaArgs);
         } else {
             event.preventDefault();
-            gaTrack(gaArgs, function() { window.location = href; });
+            window.gaTrack(gaArgs, function() { window.location = href; });
         }
     };
 
@@ -74,7 +75,7 @@ function onYouTubeIframeAPIReady() {
             }
 
             function onPlayerStateChange(event) {
-                if (event.data == YT.PlayerState.ENDED) {
+                if (event.data === YT.PlayerState.ENDED) {
                     window.dataLayer = window.dataLayer || [];
                     window.dataLayer.push({
                         'event': 'video-interaction',
