@@ -201,10 +201,9 @@ function gaTrack(obj, callback) {
                         'hitType': 'event',
                         'category': obj[1],
                         'action': obj[2],
-                        'label': obj[3],
-                        'opt_label': obj[4],
-                        'opt_value': obj[5],
-                        'opt_noninteraction': obj[6]
+                        'opt_label': obj[3],
+                        'opt_value': obj[4],
+                        'opt_noninteraction': obj[5]
                     });
                     break;
                 case '_trackPageview':
