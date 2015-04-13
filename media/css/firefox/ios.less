@@ -1,0 +1,63 @@
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+@import "../sandstone/lib.less";
+
+// potential general styles for new mozilla id themed pages
+@mozIDBlue: #0c99d5;
+
+.mozid {
+    color: #fff;
+
+    #outer-wrapper {
+        background: @mozIDBlue url(/media/img/firefox/family/index/aurora.png) right top no-repeat;
+
+        @media only screen and (max-width: @breakTablet) {
+            background-position: -200px -100px;
+        }
+    }
+
+    #wrapper {
+        width: 100%;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1, h2, h3, h4, h5, h6, .huge, .large {
+        color: #fff;
+        text-shadow: none;
+    }
+}
+
+.content {
+    .border-box();
+    width: @widthDesktop;
+    margin: 0 auto;
+
+    @media only screen and (min-width: @breakDesktopWide) {
+        width: @widthDesktopWide;
+    }
+
+    @media only screen and (max-width: @breakDesktop) {
+        width: @widthTablet;
+    }
+
+    @media only screen and (max-width: @breakTablet) {
+        width: @widthMobile;
+    }
+
+    @media only screen and (min-width: @breakMobileLandscape) and (max-width: @breakTablet) {
+        width: @widthMobileLandscape;
+    }
+}
+
+#sync {
+    background: #fff;
+    color: @textColorPrimary;
+
+    h2, h3 {
+        color: @textColorSecondary;
+    }
+}

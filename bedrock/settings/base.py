@@ -741,6 +741,14 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'css/firefox_independent-bundle.css',
     },
+    'firefox_ios': {
+        'source_filenames': (
+            'css/sandstone/sandstone-resp.less',
+            'css/firefox/family-nav.less',
+            'css/firefox/ios.less',
+        ),
+        'output_filename': 'css/firefox_ios-bundle.css',
+    },
     'installer_help': {
         'source_filenames': (
             'css/sandstone/sandstone-resp.less',
@@ -1517,6 +1525,15 @@ PIPELINE_JS = {
             'js/libs/matchMedia.addListener.js',
         ),
         'output_filename': 'js/firefox_hello_ie9-bundle.js',
+    },
+    'firefox_ios': {
+        'source_filenames': (
+            'js/libs/jquery.waypoints.min.js',
+            'js/libs/jquery.waypoints-sticky.min.js',
+            'js/firefox/family-nav.js',
+            'js/firefox/ios.js',
+        ),
+        'output_filename': 'js/firefox_ios-bundle.js',
     },
     'firefox_privacy_tour': {
         'source_filenames': (
