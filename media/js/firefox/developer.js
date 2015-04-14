@@ -16,35 +16,28 @@ function onYouTubeIframeAPIReady() {
     var firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-
-    var trackClick = function (gaArgs, href, event) {
-        window.dataLayer = window.dataLayer || [];
-        if (event.metaKey || event.ctrlKey) {
-            // Open link in new tab
-            window.gaTrack(gaArgs);
-        } else {
-            event.preventDefault();
-            window.gaTrack(gaArgs, function() { window.location = href; });
-        }
-    };
-
     // GA tracking for download buttons
-    $('.intro .download-link').on('click', function(e) {
-        trackClick([
-            '_trackEvent',
-            '/firefox/developer/ Interactions',
-            'primary CTA - download click',
-            'Firefox Developer Edition',
-        ], $(this).attr('href'), e);
+    $('.intro .download-link').on('click', function() {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(
+            {
+                event: 'firefox-developer-download', 
+                location: 'primary CTA - download click',
+                eventCallback: function() {
+                    $(this).attr('href');
+                }
+            });
     });
 
-    $('.dev-footer .download-link').on('click', function(e) {
-        trackClick([
-            '_trackEvent',
-            '/firefox/developer/ Interactions',
-            'secondary CTA - bottom download click',
-            'Firefox Developer Edition',
-        ], $(this).attr('href'), e);
+    $('.dev-footer .download-link').on('click', function() {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+                event: 'firefox-developer-download', 
+                location: 'secondary CTA - bottom download click',
+                eventCallback: function() {
+                    $(this).attr('href');
+                }
+            });
     });
 
     function onYouTubeIframeAPIReady() {
@@ -75,7 +68,7 @@ function onYouTubeIframeAPIReady() {
             }
 
             function onPlayerStateChange(event) {
-                if (event.data === YT.PlayerState.ENDED) {
+                if (event.data == YT.PlayerState.ENDED) {
                     window.dataLayer = window.dataLayer || [];
                     window.dataLayer.push({
                         'event': 'video-interaction',
