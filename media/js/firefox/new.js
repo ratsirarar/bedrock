@@ -112,8 +112,8 @@
             state = 'Desktop, Firefox not up-to-date';
         }
     }
-    dataLayer = dataLayer || [];
-    window.gaTrack(['_setCustomVar', 4, '/new conditional message', state, 3]);
+    // window.dataLayer = window.dataLayer || [];
+    // window.gaTrack(['_setCustomVar', 4, '/new conditional message', state, 3]);
 
     // conditions in which scene2 should not be shown, even when the
     // #download-fx hash is set
@@ -217,10 +217,14 @@
                 // stop in a half-animated state.
                 window.setTimeout(
                     function() {
-                        gaTrack(
-                            ['_trackPageview', virtual_url],
-                            function() { window.location.href = url; }
-                        );
+                        window.dataLayer = window.dataLayer || [];
+                        window.dataLayer.push({
+                            event: 'virtual-pageview', 
+                            virtualUrl: virtual_url, 
+                            eventCallback: function() {
+                                window.location.href = url;
+                            }
+                        });
                     },
                     500
                 );
@@ -233,7 +237,14 @@
                 // popup must go before tracking to prevent timeouts that
                 // cause the security blocker.
                 window.open(url, 'download_window', 'toolbar=0,location=no,directories=0,status=0,scrollbars=0,resizeable=0,width=1,height=1,top=0,left=0');
-                gaTrack(['_trackPageview', virtual_url]);
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    event: 'virtual-pageview', 
+                    virtualUrl: virtual_url, 
+                    eventCallback: function() {
+                        window.location.href = url;
+                    }
+                });
             }
 
             if (isIELT9) {
