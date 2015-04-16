@@ -64,8 +64,11 @@
 
                     // Call GA tracking here to ensure it waits for the
                     // getConfiguration async call
-                    window.gaTrack(['_trackEvent', '/sync/ Page Interactions', 'load', state]);
-
+                    window.dataLayer = window.dataLayer || [];
+                    window.dataLayer.push({
+                        event: 'page-load',
+                        browser: state
+                    });
                 });
 
             // Variation #3: Firefox 29 or 30
@@ -89,8 +92,12 @@
 
     // Send page state to GA if it hasn't already been sent in the
     // getConfiguration callback
-    if (syncCapable === false) {
-        window.gaTrack(['_trackEvent', '/sync/ Page Interactions', 'load', state]);
+        if (syncCapable === false) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'page-load',
+            browser: state
+        });
     }
 
     var trackClick = function (eventObj, element, event) {
