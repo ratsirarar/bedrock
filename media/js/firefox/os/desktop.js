@@ -233,7 +233,13 @@
     });
 
     //track GA event for newsletter CTA
-    window.trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'click', cta]);
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'consumer-page-interaction',
+      interaction: 'click',
+      location: cta
+    });
+    // window.trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'click', cta]);
   });
 
   $('#sign-up-form-close').on('click', function() {
@@ -256,7 +262,13 @@
     });
 
     //track GA event for get a phone CTA
-    window.trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'click', 'Get a Phone']);
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'consumer-page-interaction',
+      interaction: 'click',
+      location: 'Get a Phone'
+    });
+    // window.trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'click', 'Get a Phone']);
   });
 
   // toggle sticky masthead when tabzilla is opened/closed
@@ -367,7 +379,13 @@
   // tracks click even on nav link, and pauses scroll tracking momentarily
   function navClickGATrack(section_hash) {
     //track GA event for nav clicks
-    window.trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'nav click', section_hash]);
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'consumer-page-interaction',
+      interaction: 'nav click',
+      location: section_hash
+    });
+    // window.trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'nav click', section_hash]);
 
     // do not track while page is flying around
     pause_ga_tracking = true;
@@ -704,7 +722,13 @@
 
     $('#adapt-feature-sprite-plus').on(click_event, function(e) {
       e.preventDefault();
-      window.trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'click', 'Adaptive sprite plus']);
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'consumer-page-interaction',
+        interaction: 'click',
+        location: 'Adaptive sprite plus'
+      });
+      // window.trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'click', 'Adaptive sprite plus']);
     });
   }
 

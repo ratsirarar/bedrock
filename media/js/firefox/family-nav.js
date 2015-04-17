@@ -12,6 +12,7 @@ if (typeof window.Mozilla === 'undefined') {
 
     var $fxFamilyNavWrapper = $('#fxfamilynav-wrapper');
     var $fxFamilyNavCTAStager = $('#fxfamilynav-cta-stager');
+    var navVersion;
 
     // determine which nav to show
     var showV1;
@@ -37,9 +38,9 @@ if (typeof window.Mozilla === 'undefined') {
     try {
         sessionStorage.setItem('fxfamilynavV1', showV1);
     } catch (ex) {}
-
-    window.gaTrack(['_setCustomVar', 8, 'Family Nav A/B Test', 'Version ' + ((showV1 === 'yes') ? '1' : '2'), 2]);
-    window.gaTrack(['_trackEvent', 'Family Nav A/B Test', 'page load']);
+    navVersion = 'Version ' + ((showV1 === 'yes') ? '1' : '2');
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({event: 'page-load', navVersion: navVersion});
 
     // as one of the navs will be removed after testing, i thought it better
     // to keep each nav's JS separate (even though some code is duplicated)
@@ -125,7 +126,12 @@ if (typeof window.Mozilla === 'undefined') {
 
                 // track when opening menu
                 if ($tertiaryNavTrigger.hasClass('active')) {
-                    window.gaTrack(['_trackEvent', 'Fx Family Nav V2 Interactions', 'Side Menu', 'Open Menu']);
+                    window.dataLayer = window.dataLayer || [];
+                    window.dataLayer.push({
+                        event: 'family-nav2-interaction',
+                        location: 'Side Menu',
+                        browserAction: 'Open Menu'
+                    });
                 }
             }).addClass('visible');
 
@@ -269,12 +275,22 @@ if (typeof window.Mozilla === 'undefined') {
                     childName += ' ' + parentName[2];
                 }
 
+                window.dataLayer = window.dataLayer || [];
                 if (e.metaKey || e.ctrlKey) {
-                    window.gaTrack(['_trackEvent', 'Fx Family Nav V2 Interactions', trackName, childName]);
+                    window.dataLayer.push({
+                        event: 'family-nav2-interaction',
+                        location: trackName,
+                        browserAction: childName
+                    });
                 } else {
                     e.preventDefault();
-                    window.gaTrack(['_trackEvent', 'Fx Family Nav V2 Interactions', trackName, childName], function() {
-                        window.location = $this.attr('href');
+                    window.dataLayer.push({
+                        event: 'family-nav2-interaction',
+                        location: trackName,
+                        browserAction: childName,
+                        eventCallback: function() {
+                            window.location = $this.attr('href');
+                        }
                     });
                 }
             });
@@ -282,13 +298,23 @@ if (typeof window.Mozilla === 'undefined') {
             // clicks on tertiary nav links
             $tertiaryNavs.on('click', 'a', function(e) {
                 var $this = $(this);
-
+                window.dataLayer = window.dataLayer || [];
                 if (e.metaKey || e.ctrlKey || $this.attr('rel') === 'external') {
-                    window.gaTrack(['_trackEvent', 'Fx Family Nav V2 Interactions', 'Side Menu', $this.data('ga')]);
+                    window.dataLayer.push({
+                        event: 'family-nav2-interaction',
+                        location: 'Side Menu',
+                        browserAction: $this.data('ga')
+                    });
+                    // window.gaTrack(['_trackEvent', 'Fx Family Nav V2 Interactions', 'Side Menu', $this.data('ga')]);
                 } else {
                     e.preventDefault();
-                    window.gaTrack(['_trackEvent', 'Fx Family Nav V2 Interactions', 'Side Menu', $this.data('ga')], function() {
-                        window.location = $this.attr('href');
+                    window.dataLayer.push({
+                        event: 'family-nav2-interaction',
+                        location: 'Side Menu',
+                        browserAction: $this.data('ga'),
+                        eventCallback: function() {
+                            window.location = $this.attr('href');
+                        }
                     });
                 }
             });
@@ -414,7 +440,12 @@ if (typeof window.Mozilla === 'undefined') {
 
                 // track when opening menu
                 if ($tertiaryNavTrigger.hasClass('active')) {
-                    window.gaTrack(['_trackEvent', 'Fx Family Nav Interactions', 'Side Menu', 'Open Menu']);
+                    window.dataLayer = window.dataLayer || [];
+                    window.dataLayer.push({
+                        event: 'family-nav-interaction',
+                        location: 'Side Menu',
+                        browserAction: 'Open Menu'
+                    });
                 }
             }).addClass('visible');
 
@@ -518,13 +549,22 @@ if (typeof window.Mozilla === 'undefined') {
             // clicks on top level nav links
             $primaryLinks.on('click', function(e) {
                 var $this = $(this);
-
+                window.dataLayer = window.dataLayer || [];
                 if (e.metaKey || e.ctrlKey) {
-                    window.gaTrack(['_trackEvent', 'Fx Family Nav Interactions', $this.data('id'), $this.data('id') + ' - top nav link']);
+                    window.dataLayer.push({
+                        event: 'family-nav-interaction',
+                        location: $this.data('id'),
+                        browserAction: $this.data('id') + ' - top nav link'
+                    });
                 } else {
                     e.preventDefault();
-                    window.gaTrack(['_trackEvent', 'Fx Family Nav Interactions', $this.data('id'), $this.data('id') + ' - top nav link'], function() {
-                        window.location = $this.attr('href');
+                    window.dataLayer.push({
+                        event: 'family-nav-interaction',
+                        location: $this.data('id'),
+                        browserAction: $this.data('id') + ' - top nav link',
+                        eventCallback: function() {
+                            window.location = $(this).attr('href');
+                        }
                     });
                 }
             });
@@ -536,13 +576,22 @@ if (typeof window.Mozilla === 'undefined') {
                 var parentName = $this.data('id').split('-');
 
                 var trackName = ($fxFamilyHeader.hasClass('stuck')) ? parentName[0] + ' - Persistent Nav' : parentName[0];
-
+                window.dataLayer = window.dataLayer || [];
                 if (e.metaKey || e.ctrlKey) {
-                    window.gaTrack(['_trackEvent', 'Fx Family Nav Interactions', trackName, parentName[1]]);
+                    window.dataLayer.push({
+                        event: 'family-nav-interaction',
+                        location: trackName,
+                        browserAction: parentName[1]
+                    });
                 } else {
                     e.preventDefault();
-                    window.gaTrack(['_trackEvent', 'Fx Family Nav Interactions', trackName, parentName[1]], function() {
-                        window.location = $this.attr('href');
+                    window.dataLayer.push({
+                        event: 'family-nav-interaction',
+                        location: trackName,
+                        browserAction: parentName[1],
+                        eventCallback: function() {
+                            window.location = $this.attr('href');
+                        }
                     });
                 }
             });
@@ -552,11 +601,20 @@ if (typeof window.Mozilla === 'undefined') {
                 var $this = $(this);
 
                 if (e.metaKey || e.ctrlKey || $this.attr('rel') === 'external') {
-                    window.gaTrack(['_trackEvent', 'Fx Family Nav Interactions', 'Side Menu', $this.data('ga')]);
+                    window.dataLayer.push({
+                        event: 'family-nav-interaction',
+                        location: 'Side Menu',
+                        browserAction: $this.data('ga')
+                    });
                 } else {
                     e.preventDefault();
-                    window.gaTrack(['_trackEvent', 'Fx Family Nav Interactions', 'Side Menu', $this.data('ga')], function() {
-                        window.location = $this.attr('href');
+                    window.dataLayer.push({
+                        event: 'family-nav-interaction',
+                        location: 'Side Menu',
+                        browserAction: $this.data('ga'),
+                        eventCallback: function() {
+                            window.location = $this.attr('href');
+                        }
                     });
                 }
             });
