@@ -160,16 +160,19 @@
 .cta {
     background: @syncBlue;
     color: #fff;
-    .inner-wrapper {
+
+    &.for-android .inner-wrapper {
         .at2x('/media/img/firefox/sync/droid-dude.png', 170px, 200px);
         background-position: 0 20px;
         background-repeat: no-repeat;
     }
+
     header {
         text-align: center;
         .span(5);
         .offset(2);
     }
+
     aside {
         .span(4);
         .offset(1);

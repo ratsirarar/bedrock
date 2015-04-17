@@ -40,8 +40,13 @@
   </div>
   <div class="show-fx-31-signed-out show-fx-29-30 show-fx-28-older show-fx-android show-not-fx show-default">
     <h1>{{ _('Take your Web with you') }}</h1>
+
     <p>
+    {% if l10n_has_tag('fx38_sync_updates') %}
+      {{ _('Sync your bookmarks, passwords, tabs and more using your Firefox Account, and access them everywhere you’re signed in.') }}
+    {% else %}
       {{ _('Sync Firefox wherever you use it to access your bookmarks, passwords, tabs and more from any smartphone, tablet or computer.') }}
+    {% endif %}
     </p>
   </div>
 </header>
@@ -180,9 +185,24 @@
       <header>
         <h2>{{ _('Sync a little. Sync a lot.') }}</h2>
         <p>
+        {% if l10n_has_tag('fx38_sync_updates') %}
+          {{ _('Want to visit your computer’s open tabs from another device? Access your browsing history on the go? Keep your passwords with you? Now you can.') }}
+        {% else %}
           {{ _('You choose what parts of your Firefox you want to sync and where you want to sync them. Take your open tabs on your daily commute. Access your bookmarks at work. Whatever, whenever, everywhere.') }}
+        {% endif %}
         </p>
       </header>
+
+    {% if l10n_has_tag('fx38_sync_updates') %}
+      <p>{{ _('Here’s what you can sync:') }}</p>
+
+      <ul class="sync-icons">
+        <li>{{ _('Bookmarks') }}</li>
+        <li>{{ _('Passwords') }}</li>
+        <li>{{ _('Open tabs') }}</li>
+        <li>{{ _('History') }}</li>
+      </ul>
+    {% else %}
       <div class="features">
         <div class="feature-home">
           <h3>{{ _('At home') }}</h3>
@@ -202,12 +222,28 @@
             {{ _('Keep up with your favorite sites, or finish that story you started at home — wherever you go. With Sync, it’s never been easier.') }}
           </p>
         </div>
+      {% endif %}
       </div>
     </div>
   </div>
 </section>
 
-<section class="cta">
+{% if l10n_has_tag('fx38_sync_updates') and waffle.switch('ios-active') %}
+<section class="cta ios-active">
+  <div class="inner-wrapper">
+    <div class="container">
+      <h3>{{ _('Add Firefox to your smartphone or tablet') }}</h3>
+      <p>{{ _('To get the full Sync experience, get Firefox for iOS or Android and connect all your devices — everywhere and anywhere you use Firefox.') }}</p>
+      <p>
+        <a href="#TODO" class="button-flat">
+          {{ _('Add Firefox') }}
+        </a>
+      </p>
+    </div>
+  </div>
+</section>
+{% else %}
+<section class="cta for-android">
   <div class="inner-wrapper">
     <div class="container">
       <header>
@@ -221,9 +257,11 @@
           {{ _('To get the full Sync experience, take your Web with you everywhere you use Firefox. Connect your smartphone, tablet, computer and laptop.') }}
         </p>
       </aside>
+      </p>
     </div>
   </div>
 </section>
+{% endif %}
 
 {% endblock %}
 
