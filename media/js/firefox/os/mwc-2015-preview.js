@@ -4,7 +4,7 @@
 
 ;(function($) {
     'use strict';
-    $('.ga').attr('data-track', 'true');
+    $('.modal-link').attr('data-track', 'true');
     $('.modal-link').on('click', function(e) {
         e.preventDefault();
 
