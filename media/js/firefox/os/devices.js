@@ -76,12 +76,16 @@ if (typeof window.Mozilla === 'undefined') {
     /*
     * Track telecom provider link clicks/page exits in Google Analytics
     */
+
     var trackProviderExit = function(e) {
         var $this = $(this);
         var newTab = (this.target === '_blank' || e.metaKey || e.ctrlKey);
 
+        window.dataLayer = window.dataLayer || [];
         if (newTab) {
-            gaTrack(['_trackEvent', '/os/devices/ Interactions', 'Get a Phone Overlay Exits', $this.text()]);
+            window.dataLayer.push({
+                event: 'overlay-exit',
+            });
         } else {
             e.preventDefault();
 
@@ -89,8 +93,10 @@ if (typeof window.Mozilla === 'undefined') {
             var callback = (newTab) ? null : function() {
                 window.location = href;
             };
-
-            gaTrack(['_trackEvent', '/os/devices/ Interactions', 'Get a Phone Overlay Exits', $this.text()], callback);
+            window.dataLayer.push({
+                event: 'overlay-exit',
+                eventCallback: callback
+            });
         }
     };
 
@@ -112,11 +118,16 @@ if (typeof window.Mozilla === 'undefined') {
     $locationSelect.on('change', function() {
         COUNTRY_CODE = $locationSelect.val();
         selectDevicesAndSetPartnerContent();
-
-        gaTrack(['_trackEvent', '/os/devices/ Interactions', 'drop-down menu', COUNTRY_CODE, 0, false]);
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+                event: 'device-drop-down',
+                countryCode: COUNTRY_CODE,
+                nonInteraction: false
+        });
     });
 
     // wire up purchase button
+    $purchaseDeviceButtons.attr('data-track', 'true');
     $purchaseDeviceButtons.on('click', function(e) {
         e.preventDefault();
 
@@ -124,8 +135,6 @@ if (typeof window.Mozilla === 'undefined') {
             allowScroll: false,
             title: '<img src="/media/img/firefox/os/logo/firefox-os-white.png" alt="mozilla" />'
         });
-
-        gaTrack(['_trackEvent', '/os/devices/ Interactions', 'Get a Phone CTA Clicks', (selectedDevice || 'none selected')]);
     });
 
     // wire up thumbnail select
@@ -152,7 +161,13 @@ if (typeof window.Mozilla === 'undefined') {
                     }, 200);
                 });
 
-                gaTrack(['_trackEvent', '/os/devices/ Interactions', selectedDevice + ' Interactions', 'Open Features']);
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    'event': 'device-interaction',
+                    'deviceName': selectedDevice + ' Interactions',
+                    'browserAction': 'Open Features',
+                    deviceSelected: selectedDevice
+                });
             }
         } else {
             e.preventDefault();
@@ -168,10 +183,13 @@ if (typeof window.Mozilla === 'undefined') {
         $(this).parents('.device-detail-list:first').slideUp('fast', function() {
             $deviceDetails.hide();
         });
-
-        gaTrack(['_trackEvent', '/os/devices/ Interactions', selectedDevice + ' Interactions', 'Close Features']);
-
-        selectedDevice = null;
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'device-interaction',
+            deviceName: selectedDevice + ' Interactions',
+            browserAction: 'Close Features',
+            deviceSelected: null
+        });
     });
 
     /*
@@ -207,6 +225,12 @@ if (typeof window.Mozilla === 'undefined') {
             $provider = $providerLinks.find('.provider[data-country="' + COUNTRY_CODE + '"]');
 
             if (COUNTRY_CODE !== '' && $provider.length > 0) {
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    event: 'device-drop-down',
+                    countryCode: COUNTRY_CODE,
+                    nonInteraction: true
+                });
                 gaTrack(['_trackEvent', '/os/devices/ Interactions', 'drop-down menu', COUNTRY_CODE, 0, true]);
                 selectDevicesAndSetPartnerContent();
             }
@@ -249,27 +273,16 @@ if (typeof window.Mozilla === 'undefined') {
     // GA specific interactions
 
     // track all 'regular' links (non-CTA, non-device)
-    $('.standard-link').on('click', function(e) {
-        var newTab = (this.target === '_blank' || e.metaKey || e.ctrlKey);
-
-        var href = this.href;
-
-        if (newTab) {
-            gaTrack(['_trackEvent', '/os/devices/ Interactions', 'link clicks', href]);
-        } else {
-            e.preventDefault();
-
-            var callback = function() {
-                window.location = href;
-            };
-
-            gaTrack(['_trackEvent', '/os/devices/ Interactions', 'link clicks', href], callback);
-        }
-    });
+    $('.standard-link').attr('data-track', 'true');
 
     // track mozilla pager tab clicks
     $('.pager-tabs').on('click', 'a', function() {
-        gaTrack(['_trackEvent', '/os/devices/ Interactions', selectedDevice + ' Interactions', $(this).data('label') + ' Tab']);
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'device-interaction',
+            deviceName: selectedDevice + ' Interactions',
+            browserAction: $(this).data('label') + ' Tab'
+        });
     });
 
     // initialize fx family nav
