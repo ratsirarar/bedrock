@@ -112,8 +112,11 @@
     w.ga_track = function(virtual_page) {
         window.dataLayer = window.dataLayer || [];
         if (last_virtual_page !== virtual_page) {
-            window.gaTrack(['_trackPageview', '/' + locale + '/firefox/partners/' + virtual_page]);
-
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                event: 'virtual-pageview',
+                virtualUrl: '/' + locale + '/firefox/partners/' + virtual_page
+            });
             last_virtual_page = virtual_page;
         }
     };
