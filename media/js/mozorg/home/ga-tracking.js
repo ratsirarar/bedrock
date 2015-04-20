@@ -5,24 +5,55 @@
 $(function () {
     'use strict';
 
-    function trackGenericLink(action, href, callback) {
-        if (typeof callback === 'function') {
-            gaTrack(['_trackEvent', 'Homepage Interactions', action, href], callback);
-        } else {
-            gaTrack(['_trackEvent', 'Homepage Interactions', action, href]);
-        }
-    }
+    var $largeTile;
+    var $largeTileParent;
+    var $smallTile;
+    var $smallTileParent;
+    var $faces;
+    var $tweets;
+    var $mainNav;
+    var promoClass;
 
-    function trackPromoTile(promoId, promoClass, promoName, callback) {
-        gaTrack(['_setCustomVar', 10, 'Homepage Tile Position', promoId, 3]);
-        gaTrack(['_setCustomVar', 11, 'Homepage Tile Size', promoClass, 3]);
+    // Set Up data-attr for consumption by GTM
 
-        if (typeof callback === 'function') {
-            gaTrack(['_trackEvent', 'Homepage Interactions', 'tile click', promoName], callback);
-        } else {
-            gaTrack(['_trackEvent', 'Homepage Interactions', 'tile click', promoName]);
-        }
-    }
+    // promo tiles
+    $largeTile = $('.promo-large-portrait > a.panel-link, .promo-large-landscape > a.panel-link');
+    $largeTileParent = $largeTile.parent();
+    promoClass = $largeTileParent.hasClass('promo-large-portrait') ? 'portrait' : 'landscape';
+    $largeTile.attr('data-promotion-id', $largeTileParent.prop('id'))
+        .attr('data-promotion-name', $largeTileParent.data('name'))
+        .attr('data-promotion-class', 'promo-large-' + promoClass)
+        .attr('data-promotion-type', 'tile');
+
+    $smallTile = $('.promo-small-landscape > a.panel-link');
+    $smallTileParent = $smallTile.parent();
+    $smallTile.attr('data-promotion-id', $smallTileParent.prop('id'))
+        .attr('data-promotion-name', $smallTileParent.data('name'))
+        .attr('data-promotion-class', 'promo-small-landscape')
+        .attr('data-promotion-type', 'tile');
+
+    $faces = $('.promo-face > a');
+    $faces.attr('data-promotion-id', $faces.parent().prop('id'))
+        .attr('data-promotion-name', 'Mozillians')
+        .attr('data-promotion-class', 'promo-face')
+        .attr('data-promotion-type', 'tile');
+
+    $tweets = $('.twt-actions > a');
+    $tweets.attr('data-promotion-id', $tweets.parent().closest('li').prop('id'))
+        .attr('data-promotion-name', 'Mozilla Tweets ' + $tweets.attr('title'))
+        .attr('data-promotion-class', 'promo-small-landscape')
+        .attr('data-promotion-type', 'tile');
+
+    //generic links
+    $mainNav = $('#nav-main-menu li a');
+    $mainNav.attr('data-element-location', 'nav click').attr('data-link-type', $mainNav.data('name'));
+
+    $('#upcoming-events a').attr('data-element-location', 'Upcoming Event Link Clicks')
+        .attr('data-link-type', 'href');
+    $('.contribute-btn').attr('data-element-location', 'button-click')
+        .attr('data-link-type', 'Get Involved with Mozilla today');
+    $('#secondary-links a').attr('data-element-location', 'Secondary Link Clicks')
+        .attr('data-link-type', 'href');
 
     // track user scrolling through each section down the page
     $('.module').waypoint(function(direction) {
@@ -32,101 +63,6 @@ $(function () {
             window.dataLayer.push({event: 'scroll-tracking', section: id});
         }
     }, { offset: '100%' });
-
-    // track clicks in main navigation
-    $('#nav-main-menu li a').on('click', function(e) {
-        var name = $(this).data('name');
-        var href = this.href;
-        var newTab = (this.target === '_blank' || e.metaKey || e.ctrlKey);
-        var callback;
-
-        if (newTab) {
-            trackGenericLink('nav click', name);
-        } else {
-            e.preventDefault();
-            callback = function() {
-                window.location = href;
-            };
-            trackGenericLink('nav click', name, callback);
-        }
-    });
-
-    // track large promo clicks
-    $('.promo-large-portrait > a.panel-link, .promo-large-landscape > a.panel-link').on('click', function(e) {
-        var $promo = $(this).parent();
-        var id = $promo.prop('id');
-        var promoName = $promo.data('name');
-        var promoClass = $promo.hasClass('promo-large-portrait') ? 'portrait' : 'landscape';
-        var newTab = (this.target === '_blank' || e.metaKey || e.ctrlKey);
-        var href = this.href;
-        var callback = function() {
-            window.location = href;
-        };
-
-        if (newTab) {
-            trackPromoTile(id, 'promo-large-' + promoClass, promoName);
-        } else {
-            e.preventDefault();
-            trackPromoTile(id, 'promo-large-' + promoClass, promoName, callback);
-        }
-    });
-
-    // track small promo clicks
-    $('.promo-small-landscape > a.panel-link').on('click', function(e) {
-        var $promo = $(this).parent();
-        var id = $promo.prop('id');
-        var promoName = $promo.data('name');
-        var newTab = (this.target === '_blank' || e.metaKey || e.ctrlKey);
-        var href = this.href;
-        var callback = function() {
-            window.location = href;
-        };
-
-        if (newTab) {
-            trackPromoTile(id, 'promo-small-landscape', promoName);
-        } else {
-            e.preventDefault();
-            trackPromoTile(id, 'promo-small-landscape', promoName, callback);
-        }
-    });
-
-    // track Mozillian face clicks
-    $('.promo-face > a').on('click', function(e) {
-        var $promo = $(this).parent();
-        var id = $promo.prop('id');
-        var newTab = (this.target === '_blank' || e.metaKey || e.ctrlKey);
-        var href = this.href;
-        var callback = function() {
-            window.location = href;
-        };
-
-        if (newTab) {
-            trackPromoTile(id, 'promo-face', 'Mozillians');
-        } else {
-            e.preventDefault();
-            trackPromoTile(id, 'promo-face', 'Mozillians', callback);
-        }
-    });
-
-    // track Tweet promo clicks
-    $('.twt-actions > a').on('click', function(e) {
-        var $this = $(this);
-        var $promo = $this.closest('li');
-        var id = $promo.prop('id');
-        var action = $this.attr('title');
-        var newTab = (this.target === '_blank' || e.metaKey || e.ctrlKey);
-        var href = this.href;
-        var callback = function() {
-            window.location = href;
-        };
-
-        if (newTab) {
-            trackPromoTile(id, 'promo-small-landscape', 'Mozilla Tweets ' + action);
-        } else {
-            e.preventDefault();
-            trackPromoTile(id, 'promo-small-landscape', 'Mozilla Tweets ' + action, callback);
-        }
-    });
 
     // track download firefox promo clicks
     $('.promo-small-landscape.firefox-download a.download-link').on('click', function(e) {
@@ -169,54 +105,6 @@ $(function () {
         } else {
             e.preventDefault();
             window.dataLayer.push({event: 'firefox-downloads', interaction: 'download click - primary', downloadVersion: type, eventCallback: callback});
-        }
-    });
-
-    // track upcoming event link clicks
-    $('#upcoming-events a').on('click', function(e) {
-        var newTab = (this.target === '_blank' || e.metaKey || e.ctrlKey);
-        var href = this.href;
-        var callback = function() {
-            window.location = href;
-        };
-
-        if (newTab) {
-            trackGenericLink('Upcoming Event Link Clicks', href);
-        } else {
-            e.preventDefault();
-            trackGenericLink('Upcoming Event Link Clicks', href, callback);
-        }
-    });
-
-    // track community section btc button clicks
-    $('.contribute-btn').on('click', function(e) {
-        var newTab = (this.target === '_blank' || e.metaKey || e.ctrlKey);
-        var href = this.href;
-        var callback = function() {
-            window.location = href;
-        };
-
-        if (newTab) {
-            trackGenericLink('button click', 'Get Involved with Mozilla today');
-        } else {
-            e.preventDefault();
-            trackGenericLink('button click', 'Get Involved with Mozilla today', callback);
-        }
-    });
-
-    // track secondary link clicks
-    $('#secondary-links a').on('click', function(e) {
-        var newTab = (this.target === '_blank' || e.metaKey || e.ctrlKey);
-        var href = this.href;
-        var callback = function() {
-            window.location = href;
-        };
-
-        if (newTab) {
-            trackGenericLink('Secondary Link Clicks', href);
-        } else {
-            e.preventDefault();
-            trackGenericLink('Secondary Link Clicks', href, callback);
         }
     });
 
