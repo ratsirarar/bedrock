@@ -175,7 +175,11 @@
 
     // Track when/which accordion panels are opened
     var track_accordion = function(position, id) {
-        gaTrack(['_trackEvent','Homepage Interactions', 'open', position+':'+id]);
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'homepage-interaction', 
+            interaction: 'open', 
+            location: position + ':' + id});
     };
 
     // Track panel clicks
@@ -187,7 +191,13 @@
             $(this).blur();
             window.location = href;
         };
-        gaTrack(['_trackEvent','Homepage Interactions', 'click', (panel.index() + 1)+':'+panel.attr('id')], callback);
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'homepage-interaction', 
+            interaction: 'click', 
+            location: (panel.index() + 1)+':'+panel.attr('id'), 
+            eventCallback: callback
+        });
     });
 
     // Track donate clicks
@@ -199,10 +209,13 @@
 
         var panel = $(this).parents('.panel');
 
-        gaTrack(
-            ['_trackEvent', 'Homepage Interactions', 'submit', (panel.index() + 1) + ':donate'],
-            function (){ $form.submit(); }
-        );
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'homepage-interaction',
+            interaction: 'submit',
+            location: (panel.index() + 1) + ':donate',
+            eventCallback: function() { $form.submit(); }
+        });
     });
 
     // Track news & contribute clicks
@@ -216,7 +229,13 @@
 
         var action = (/external/.test($(this).attr('rel'))) ? 'outbound link' : 'click';
 
-        gaTrack(['_trackEvent', 'Homepage Interactions', action, href], callback);
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'homepage-interaction',
+            interaction: action,
+            location: href,
+            eventCallback: callback
+        });
     });
 
     // Track Firefox downloads
