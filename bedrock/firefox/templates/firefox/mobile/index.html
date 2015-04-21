@@ -1,0 +1,65 @@
+{# This Source Code Form is subject to the terms of the Mozilla Public
+ # License, v. 2.0. If a copy of the MPL was not distributed with this
+ # file, You can obtain one at http://mozilla.org/MPL/2.0/. -#}
+
+{% extends "firefox/base-resp.html" %}
+
+{% add_lang_files "firefox/whatsnew_38" %}
+
+{% block page_title_prefix %}{{ _('Keep your favorite things at your fingertips.') }}{% endblock %}
+{% block page_title %}{{ _('Add Firefox to your smartphone or tablet.') }}{% endblock %}
+{% block body_id %}firefox-mobile{% endblock %}
+{% block body_class %}{% endblock %}
+
+{% block site_css %}
+  {% stylesheet 'firefox_mobile' %}
+{% endblock %}
+
+{% block site_header %}
+<header id="masthead">
+  <div id="tabzilla">
+    <a href="{{ url('mozorg.home') }}">Mozilla</a>
+  </div>
+</header>
+{% endblock %}
+
+{% block content %}
+<main role="main">
+  <section id="mobile-content">
+    <h1>{{ _('Keep your favorite things at your fingertips.') }}</h1>
+    <p>{{ _('Add Firefox to your smartphone or tablet.') }}</p>
+    <ul class="direct-store-links" data-alt-android="{{_('Get Firefox for Android')}}">
+      <li>
+        <a rel="external" href="#" data-alt="{{ _('Get Firefox for iOS') }}">
+          <img src="{{ l10n_img('firefox/ios/btn-app-store.svg') }}" width="152" height="45" alt="{{ _('Download on the App Store') }}">
+        </a>
+      </li>
+      <li>
+        <a rel="external" href="{{ settings.GOOGLE_PLAY_FIREFOX_LINK }}">
+          {{ high_res_img('firefox/android/btn-google-play.png', {'alt': 'Get it on Google Play', 'width': '129', 'height': '45', 'l10n': True}) }}
+        </a>
+      </li>
+    </ul>
+  </section>
+</main>
+{% endblock %}
+
+{% block site_footer %}
+  <footer role="content-info">
+    <a class="logo" href="{{ url('mozorg.home') }}">Mozilla</a>
+    <ul>
+      <li><a href="{{ url('privacy') }}#cookies">{{ _('Privacy Policy') }}</a></li>
+      <li><a href="{{ url('privacy.notices.websites') }}#cookies">{{ _('Cookies') }}</a></li>
+      <li><a href="{{ url('legal.index') }}">{{ _('Legal Notices') }}</a></li>
+    </ul>
+  </footer>
+{% endblock %}
+
+{% block email_form %}{% endblock %}
+
+{% block js %}
+  {% javascript 'firefox_mobile' %}
+{% endblock %}
+
+{% block tabzilla_css %}{% endblock %}
+{% block tabzilla_js %}{% endblock %}

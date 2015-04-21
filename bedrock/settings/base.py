@@ -694,6 +694,39 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'css/firefox_whatsnew_37-bundle.css',
     },
+    'firefox_whatsnew_38_a': {
+        'source_filenames': (
+            'css/sandstone/sandstone-resp.less',
+            'css/firefox/template-resp.less',
+            'css/base/mozid-modal.less',
+            'css/tabzilla/tabzilla-static.less',
+            'css/firefox/whatsnew_38/common.less',
+            'css/firefox/whatsnew_38/whatsnew-a.less',
+        ),
+        'output_filename': 'css/firefox_whatsnew_38-a-bundle.css',
+    },
+    'firefox_whatsnew_38_b': {
+        'source_filenames': (
+            'css/sandstone/sandstone-resp.less',
+            'css/firefox/template-resp.less',
+            'css/base/mozid-modal.less',
+            'css/tabzilla/tabzilla-static.less',
+            'css/firefox/whatsnew_38/common.less',
+            'css/firefox/whatsnew_38/whatsnew-b.less',
+        ),
+        'output_filename': 'css/firefox_whatsnew_38-b-bundle.css',
+    },
+    'firefox_mobile': {
+        'source_filenames': (
+            'css/sandstone/sandstone-resp.less',
+            'css/firefox/template-resp.less',
+            'css/base/mozid-modal.less',
+            'css/tabzilla/tabzilla-static.less',
+            'css/firefox/whatsnew_38/common.less',
+            'css/firefox/whatsnew_38/whatsnew-b.less',
+        ),
+        'output_filename': 'css/firefox_mobile-bundle.css',
+    },
     'firefox_whatsnew_fxos': {
         'source_filenames': (
             'css/sandstone/sandstone.less',
@@ -1595,6 +1628,26 @@ PIPELINE_JS = {
             'js/firefox/whatsnew-fx37.js',
         ),
         'output_filename': 'js/firefox_whatsnew_fx37-bundle.js',
+    },
+    'firefox_whatsnew_38_a': {
+        'source_filenames': (
+            'js/base/mozilla-modal.js',
+            'js/firefox/whatsnew_38/whatsnew-a.js',
+        ),
+        'output_filename': 'css/firefox_whatsnew_38-a-bundle.js',
+    },
+    'firefox_whatsnew_38_b': {
+        'source_filenames': (
+            'js/base/mozilla-modal.js',
+            'js/firefox/whatsnew_38/whatsnew-b.js',
+        ),
+        'output_filename': 'css/firefox_whatsnew_38-b-bundle.js',
+    },
+    'firefox_mobile': {
+        'source_filenames': (
+            'js/base/mozilla-modal.js',
+        ),
+        'output_filename': 'css/firefox_mobile-bundle.js',
     },
     'firefox_whatsnew_fxos': {
         'source_filenames': (
