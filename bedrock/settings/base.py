@@ -2008,6 +2008,7 @@ INSTALLED_APPS = get_apps(exclude=(
     'waffle',
     'south',
     'pipeline',
+    'localflavor',
 
     # Django contrib apps
     'django.contrib.admin',
