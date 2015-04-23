@@ -12,12 +12,6 @@ if (typeof Mozilla.Accordion === 'function') {
             interaction: 'Expand',
             section: section.$header.text()
         });
-        // gaTrack([
-        //     '_trackEvent',
-        //     location.pathname + ' Accordion Interactions',
-        //     'Expand',
-        //     section.$header.text()
-        // ]);
     };
 
     Mozilla.Accordion.GLOBAL_ONCOLLAPSE = function(section) {
@@ -28,11 +22,5 @@ if (typeof Mozilla.Accordion === 'function') {
             interaction: 'Collapse',
             section: section.$header.text()
         });
-        // gaTrack([
-        //     '_trackEvent',
-        //     location.pathname + ' Accordion Interactions',
-        //     'Collapse',
-        //     section.$header.text()
-        // ]);
     };
 }

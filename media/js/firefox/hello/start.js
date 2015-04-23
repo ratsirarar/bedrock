@@ -32,7 +32,14 @@
         } catch (ex) {
             tourSource = 'none';
         }
-        gaTrack({'event': 'hello-interactions', 'category': '/hello/start interactions', 'location': 'tour', 'browserAction': 'TourConnectConversation', 'helloFTUReferral': tourSource});
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            'event': 'hello-interactions', 
+            'category': '/hello/start interactions', 
+            'location': 'tour', 
+            'browserAction': 'TourConnectConversation', 
+            'helloFTUReferral': tourSource
+        });
         try {
             localStorage.removeItem('hello_ftu_tour_source');
         } catch (ex) { }
@@ -233,7 +240,13 @@
                     resumeTourOnFirstJoin();
 
                     // track user has clicked "Start a conversation" button
-                    gaTrack({'event': 'hello-interactions', 'category': '/hello/start interactions', 'location': 'tour', 'browserAction': 'StartConversation-Tour'});
+                    window.dataLayer = window.dataLayer || [];
+                    window.dataLayer.push({
+                        'event': 'hello-interactions', 
+                        'category': '/hello/start interactions', 
+                        'location': 'tour', 
+                        'browserAction': 'StartConversation-Tour'
+                    });
 
                 } else if (tourStep === 'invite') {
 
@@ -278,14 +291,26 @@
                 showTourStep();
                 saveTourSourceToLocalStorage();
                 // track user has clicked copy button
-                gaTrack({'event': 'hello-interactions', 'category': '/hello/start interactions', 'location': 'tour', 'browserAction': 'URLCopied-Tour'});
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    'event': 'hello-interactions', 
+                    'category': '/hello/start interactions', 
+                    'location': 'tour', 
+                    'browserAction': 'URLCopied-Tour'
+                });
                 break;
             case 'Loop:RoomURLEmailed':
                 tourStep = 'shared';
                 showTourStep();
                 saveTourSourceToLocalStorage();
                 // track user has clicked email button
-                gaTrack({'event': 'hello-interactions', 'category': '/hello/start interactions', 'location': 'tour', 'browserAction': 'URLEmailed-Tour'});
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    'event': 'hello-interactions', 
+                    'category': '/hello/start interactions', 
+                    'location': 'tour', 
+                    'browserAction': 'URLEmailed-Tour'
+                });
                 break;
             case 'Loop:PanelTabChanged':
                 // hide info panels if user switches to the Contacts tab in the Hello panel
@@ -371,7 +396,14 @@
                     // track start of tour in GA
                     if (tourStep === 'get-started') {
                         // Get referrer and set Custom Variable. none is okay here.
-                        gaTrack({'event': 'hello-interactions-referral', 'category': '/hello/start interactions', 'location': 'tour', 'browserAction': 'GetStarted', 'helloFTUReferral': tourSource});
+                        window.dataLayer = window.dataLayer || [];
+                        window.dataLayer.push({
+                            'event': 'hello-interactions-referral', 
+                            'category': '/hello/start interactions', 
+                            'location': 'tour', 
+                            'browserAction': 'GetStarted', 
+                            'helloFTUReferral': tourSource
+                        });
                     }
                 }
 
