@@ -6,21 +6,7 @@ $(function () {
     'use strict';
 
     // Track clicks in main navigation
-    $('#contribute-nav-menu li a').on('click', function(e) {
-        var label = $(this).data('label');
-        var newTab = (this.target === '_blank' || e.metaKey || e.ctrlKey);
-        var href = this.href;
-        var callback = function() {
-            window.location = href;
-        };
-
-        if (newTab) {
-            gaTrack(['_trackEvent', 'Contribute Nav Interactions ', 'nav click', label]);
-        } else {
-            e.preventDefault();
-            gaTrack(['_trackEvent', 'Contribute Nav Interactions ', 'nav click', label], callback);
-        }
-    });
+    $('#contribute-nav-menu li a').attr('data-element-location', 'nav');
 
     if ($('body').prop('id') === 'landing') {
         // Track user scrolling through each section on the landing page
@@ -41,12 +27,21 @@ $(function () {
             var callback = function() {
                 window.location = href;
             };
-
+            window.dataLayer = window.dataLayer || [];
             if (newTab) {
-                gaTrack(['_trackEvent', 'Contribute Landing Interactions', position, label]);
+                window.dataLayer.push({
+                    event: 'contribute-landing-interactions',
+                    browserAction: position,
+                    location: label
+                });
             } else {
                 e.preventDefault();
-                gaTrack(['_trackEvent', 'Contribute Landing Interactions', position, label], callback);
+                window.dataLayer.push({
+                    event: 'contribute-landing-interactions',
+                    browserAction: position,
+                    location: label,
+                    eventCallback: callback
+                });
             }
         });
     }
@@ -54,7 +49,12 @@ $(function () {
     // Track video plays
     $('a.video-play').on('click', function() {
         var linktype = $(this).data('linktype');
-        gaTrack(['_trackEvent', 'Contribute Landing Interactions', 'Video Interactions', linktype]);
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'contribute-landing-interactions',
+            browserAction: 'Video Interactions',
+            location: linktype
+        });
     });
 
     // Track Mozillian story clicks on the landing page
@@ -66,11 +66,21 @@ $(function () {
             window.location = href;
         };
 
+        window.dataLayer = window.dataLayer || [];
         if (newTab) {
-            gaTrack(['_trackEvent', 'Contribute Landing Interactions', 'How Mozillians Help Every Day', person]);
+            window.dataLayer.push({
+                    event: 'contribute-landing-interactions',
+                    browserAction: 'How Mozillians Help Every Day',
+                    location: person
+                });
         } else {
             e.preventDefault();
-            gaTrack(['_trackEvent', 'Contribute Landing Interactions', 'How Mozillians Help Every Day', person], callback);
+            window.dataLayer.push({
+                    event: 'contribute-landing-interactions',
+                    browserAction: 'How Mozillians Help Every Day',
+                    location: person,
+                    eventCallback: callback
+                });
         }
     });
 
@@ -82,12 +92,21 @@ $(function () {
         var callback = function() {
             window.location = href;
         };
-
+        window.dataLayer = window.dataLayer || [];
         if (newTab) {
-            gaTrack(['_trackEvent', 'Mozillian Stories Interactions', 'Meet a few more Mozillians', person]);
+            window.dataLayer.push({
+                event: 'mozillian-stories-interaction',
+                browserAction: 'Meet a few more Mozillians',
+                location: person
+            });
         } else {
             e.preventDefault();
-            gaTrack(['_trackEvent', 'Mozillian Stories Interactions', 'Meet a few more Mozillians', person], callback);
+            window.dataLayer.push({
+                event: 'mozillian-stories-interaction',
+                browserAction: 'Meet a few more Mozillians',
+                location: person,
+                eventCallback: callback
+            });
         }
     });
 
@@ -99,11 +118,21 @@ $(function () {
             window.location = href;
         };
 
+        window.dataLayer = window.dataLayer || [];
         if (newTab) {
-            gaTrack(['_trackEvent', 'Mozillian Stories Interactions', 'twitter search link', '#IAmAMozillian']);
+            window.dataLayer.push({
+                event: 'mozillian-stories-interaction',
+                browserAction: 'twitter search link',
+                location: '#IAmAMozillian'
+            });
         } else {
             e.preventDefault();
-            gaTrack(['_trackEvent', 'Mozillian Stories Interactions', 'twitter search link', '#IAmAMozillian'], callback);
+            window.dataLayer.push({
+                event: 'mozillian-stories-interaction',
+                browserAction: 'twitter search link',
+                location: '#IAmAMozillian',
+                eventCallback: callback
+            });
         }
     });
 
@@ -117,7 +146,12 @@ $(function () {
         };
 
         e.preventDefault();
-        gaTrack(['_trackEvent', 'Mozillian Stories Interactions', 'social button click', person + ' - ' + link], callback);
+        window.dataLayer.push({
+            event: 'mozillian-stories-interaction',
+            browserAction: 'social button click',
+            location: person + ' - ' + link,
+            eventCallback: callback
+        });
     });
 
     // Track other actions on landing page
@@ -129,7 +163,13 @@ $(function () {
         };
 
         e.preventDefault();
-        gaTrack(['_trackEvent', 'Contribute Landing Interactions', 'Not Ready to Dive in Just Yet', label], callback);
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'contribute-landing-interactions',
+            browserAction: 'Not Ready to Dive in Just Yet',
+            location: label,
+            eventCallback: callback
+        });
     });
 
     // Track other actions on confirmation page
@@ -141,7 +181,13 @@ $(function () {
         };
 
         e.preventDefault();
-        gaTrack(['_trackEvent', 'Contribute Confirmation Interactions', 'Other Ways to Support Mozilla', label], callback);
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'contribute-confirmation-interaction',
+            location: 'Other Ways to Support Mozilla',
+            browserAction: label,
+            eventCallback: callback
+        });
     });
 
     // Track Mozillians signup CTA on confirmation page
@@ -152,87 +198,54 @@ $(function () {
             window.location = href;
         };
 
+        window.dataLayer = window.dataLayer || [];
         if (newTab) {
-            gaTrack(['_trackEvent', 'Contribute Confirmation Interactions', 'Mozillians CTA click', 'Yes, Create My Mozillians Account']);
+            window.dataLayer.push({
+                event: 'contribute-confirmation-interaction',
+                location: 'Mozillians CTA click',
+                browserAction: 'Yes, Create My Mozillians Account'
+            });
         } else {
             e.preventDefault();
-            gaTrack(['_trackEvent', 'Contribute Confirmation Interactions', 'Mozillians CTA click', 'Yes, Create My Mozillians Account'], callback);
+            window.dataLayer.push({
+                event: 'contribute-confirmation-interaction',
+                location: 'Mozillians CTA click',
+                browserAction: 'Yes, Create My Mozillians Account',
+                eventCallback: callback
+            });
         }
     });
 
     // Track event links in the list
-    $('.events-table .event-name a').on('click', function(e) {
-        var eventname = $(this).text();
-        var newTab = (this.target === '_blank' || e.metaKey || e.ctrlKey);
-        var href = this.href;
-        var callback = function() {
-            window.location = href;
-        };
-
-        if (newTab) {
-            gaTrack(['_trackEvent', 'Contribute Events Interactions', 'event link click', eventname]);
-        } else {
-            e.preventDefault();
-            gaTrack(['_trackEvent', 'Contribute Events Interactions', 'event link click', eventname], callback);
-        }
-    });
+    $('.events-table .event-name a').attr('data-link-type', 'event');
 
     // Track event links in the footer
-    $('.contrib-extra .event-link').on('click', function(e) {
-        var newTab = (this.target === '_blank' || e.metaKey || e.ctrlKey);
-        var href = this.href;
-        var callback = function() {
-            window.location = href;
-        };
-
-        if (newTab) {
-            gaTrack(['_trackEvent', 'Contribute Interactions', 'Contribute Extra Links at Bottom', href]);
-        } else {
-            e.preventDefault();
-            gaTrack(['_trackEvent', 'Contribute Interactions', 'Contribute Extra Links at Bottom', href], callback);
-        }
-    });
+    $('.contrib-extra .event-link').attr('data-element-location', 'bottom');
 
     // Track 'all events' link in the footer
-    $('.contrib-extra .events-all a').on('click', function(e) {
-        var newTab = (this.target === '_blank' || e.metaKey || e.ctrlKey);
-        var href = this.href;
-        var callback = function() {
-            window.location = href;
-        };
-
-        if (newTab) {
-            gaTrack(['_trackEvent', 'Contribute Interactions', 'Contribute Extra Links at Bottom', 'See All Events']);
-        } else {
-            e.preventDefault();
-            gaTrack(['_trackEvent', 'Contribute Interactions', 'Contribute Extra Links at Bottom', 'See All Events'], callback);
-        }
-    });
+    $('.contrib-extra .events-all a').attr('data-element-location', 'bottom').attr('data-element-action', 'See All Events');
 
     // Track external links in the footer
-    $('.extra-links a').on('click', function(e){
-        var newTab = (this.target === '_blank' || e.metaKey || e.ctrlKey);
-        var href = this.href;
-        var callback = function() {
-            window.location = href;
-        };
-
-        if (newTab) {
-            gaTrack(['_trackEvent', 'Contribute Interactions', 'Contribute Extra Links at Bottom', href]);
-        } else {
-            e.preventDefault();
-            gaTrack(['_trackEvent', 'Contribute Interactions', 'Contribute Extra Links at Bottom', href], callback);
-        }
-    });
+    $('.extra-links a').attr('data-element-location', 'bottom');
 
     // Track category clicks on the signup page
     $('.option input').on('change', function() {
-        gaTrack(['_trackEvent', 'Contribute Signup Interactions', 'Category - ' + this.value, 'SELECTED']);
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'contribute-signup-interaction', 
+            interaction: 'Category',
+            contributeCategory: this.value
+        });
     });
 
     // Track category area selections
     $('.area select').on('change', function() {
-        gaTrack(['_trackEvent', 'Contribute Signup Interactions', 'Area - ' + this.value]);
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'contribute-signup-interaction', 
+            interaction: 'Area',
+            contributeArea: this.value
+        });
     });
 
     // Track signup form submissions
@@ -248,11 +261,16 @@ $(function () {
         }
 
         form.off('submit');
-        gaTrack(['_setCustomVar',13,'Contribute Signup Form - Main Area of Contribution', form.find('input[name="category"]').val(), 3]);
-        gaTrack(['_setCustomVar',14,'Contribute Signup Form Form - Contribution Drop-Down Value', form.find('.area:visible select').val(), 3]);
-        gaTrack(['_setCustomVar',15,'Contribute Signup Form Form - Sign Up for Newsletter', newsletterstate, 3]);
-        gaTrack(['_trackEvent', 'Contribute Signup Form Interactions', 'successful submit', 'Start Contributing'], function() {
-            form.submit();
+        
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'contribute-signup-submit',
+            contributeNewsletter: newsletterstate,
+            contributeArea: form.find('input[name="category"]').val(),
+            contributeCategory: form.find('.area:visible select').val(),
+            eventCallback: function() {
+                form.submit();
+            }
         });
     });
 
