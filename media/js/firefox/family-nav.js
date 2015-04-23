@@ -305,7 +305,6 @@ if (typeof window.Mozilla === 'undefined') {
                         location: 'Side Menu',
                         browserAction: $this.data('ga')
                     });
-                    // window.gaTrack(['_trackEvent', 'Fx Family Nav V2 Interactions', 'Side Menu', $this.data('ga')]);
                 } else {
                     e.preventDefault();
                     window.dataLayer.push({
