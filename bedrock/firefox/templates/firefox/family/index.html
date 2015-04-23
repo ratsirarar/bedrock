@@ -66,7 +66,7 @@
   </div>{#-- /.content --#}
 </header>{#-- /#header --#}
 
-<section id="products-primary">
+<section id="products-primary" {% if l10n_has_tag('firefox_ios') and waffle.switch('ios-active') %}class="ios-active"{% endif %}>
   <div class="content">
     <ul class="product-list">
       <li class="product" id="product-desktop">
@@ -77,7 +77,7 @@
         </a>
       </li>
 
-      <li class="product highlight" id="product-android">
+      <li class="product" id="product-android">
         <a href="{{ url('firefox.android.index') }}" data-product="Firefox for Android">
           {# L10n: span below adds visual style to "for" text #}
           <h2>{{ _('Firefox <span>for</span> Android') }}</h2>
@@ -88,6 +88,20 @@
           {{ high_res_img('firefox/android/btn-google-play.png', {'alt': 'Get it on Google Play', 'width': '129', 'height': '45', 'l10n': True}) }}
         </a>
       </li>
+
+    {% if l10n_has_tag('firefox_ios') and waffle.switch('ios-active') %}
+      <li class="product highlight" id="product-ios">
+        <a href="#TODO" data-product="Firefox for iOS">{# url('firefox.ios') // blocked by iOS product page #}
+          {# L10n: <span> tag below adds visual style to "for" text #}
+          <h2>{{ _('Firefox <span>for</span> iOS') }}</h2>
+          <p>{{ _('Get it on iPhones and iPads') }}</p>
+        </a>
+
+        <a rel="external" href="#TODO" class="btn-apple-appstore" data-product="Firefox for iOS, App Store">
+          <img src="{{ l10n_img('firefox/ios/btn-apple-appstore.svg') }}" alt="{{ _('Download on the App Store') }}" width="135" height="40">
+        </a>
+      </li>
+    {% endif %}
 
       <li class="product" id="product-fxos">
         <a href="{{ url('firefox.os.index') }}" data-product="Firefox OS">
