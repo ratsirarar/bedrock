@@ -235,11 +235,10 @@
     //track GA event for newsletter CTA
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
-      event: 'consumer-page-interaction',
+      event: 'fxos-consumer',
       interaction: 'click',
       location: cta
     });
-    // window.trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'click', cta]);
   });
 
   $('#sign-up-form-close').on('click', function() {
@@ -264,11 +263,10 @@
     //track GA event for get a phone CTA
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
-      event: 'consumer-page-interaction',
+      event: 'fxos-consumer',
       interaction: 'click',
       location: 'Get a Phone'
     });
-    // window.trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'click', 'Get a Phone']);
   });
 
   // toggle sticky masthead when tabzilla is opened/closed
@@ -381,11 +379,10 @@
     //track GA event for nav clicks
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
-      event: 'consumer-page-interaction',
+      event: 'fxos-consumer',
       interaction: 'nav click',
       location: section_hash
     });
-    // window.trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'nav click', section_hash]);
 
     // do not track while page is flying around
     pause_ga_tracking = true;
@@ -670,7 +667,12 @@
       e.preventDefault();
 
       //track GA event for monitoring if users are clicking on animated scroller
-      window.trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'click', 'Adaptive animated scroll arrows']);
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'fxos-consumer',
+        interaction: 'click',
+        location: 'Adaptive animated scroll arrows'
+      });
     });
   }
 
@@ -728,7 +730,6 @@
         interaction: 'click',
         location: 'Adaptive sprite plus'
       });
-      // window.trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'click', 'Adaptive sprite plus']);
     });
   }
 

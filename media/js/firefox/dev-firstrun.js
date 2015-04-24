@@ -66,12 +66,21 @@ function onYouTubeIframeAPIReady() {
 
             function onPlayerReady(event) {
                 event.target.playVideo();
-                window.gaTrack(['_trackEvent', 'Developer /firstrun/ Interactions', 'play', videoTitle + ' video']);
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    event: 'video-interaction',
+                    interaction: 'play',
+                    videoTitle: videoTitle
+                });
             }
 
             function onPlayerStateChange(event) {
                 if (event.data === YT.PlayerState.ENDED) {
-                    window.gaTrack(['_trackEvent', 'Developer /firstrun/ Interactions', 'finish', videoTitle + ' video']);
+                    window.dataLayer.push({
+                        event: 'video-interaction',
+                        interaction: 'finish',
+                        videoTitle: videoTitle
+                    });
                 }
             }
 

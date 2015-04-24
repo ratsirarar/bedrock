@@ -165,10 +165,19 @@
         $buttons.prependTo('.extra-news > .control');
 
         $('.news-buttons .btn-next').bind('click', function() {
-            gaTrack(['_trackEvent', 'Mozilla in the News Interactions', 'Next', 'News Navigation Arrows']);
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                event: 'mozilla-news-interaction',
+                browserAction: 'Next',
+            });
         });
         $('.news-buttons .btn-prev').bind('click', function() {
-            gaTrack(['_trackEvent', 'Mozilla in the News Interactions', 'Previous', 'News Navigation Arrows']);
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                event: 'mozilla-news-interaction',
+                browserAction: 'Previous',
+            });
         });
     }
     controlButtons();

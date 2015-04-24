@@ -102,7 +102,12 @@ DOWNLOADTAB.classes.App = (function (singleton) {
             }
 
             if (self.window.gaTrack) {
-                self.window.gaTrack(['_trackPageview', self.virtualUrl]);
+
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    event: 'virtual-pageview',
+                    virtualUrl: self.virtualUrl
+                });
             }
 
             // Delay download so window.location redirect doesn't interrupt

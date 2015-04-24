@@ -102,6 +102,7 @@
      */
     function toggleLangContentSelector () {
         clearTimeout(langTimer);
+        var href;
 
         if ($langPanel.hasClass('visible')) {
             $langPanel.removeClass('visible');
@@ -144,10 +145,16 @@
                                 sessionStorage.setItem(sessionLangPrefName, 'en-IN');
                             } catch (ex) {}
                         }
-
-                        window.gaTrack(['_trackEvent', 'FxOs Consumer Page', 'Indian Language Selection', language], function() {
-                            if (language !== 'English') {
-                                window.location = $target.attr('href');
+                        href = $target.attr('href');
+                        window.dataLayer = window.dataLayer || [];
+                        window.dataLayer.push({
+                            event: 'fxos-consumer',
+                            interaction: 'Indian Language Selection',
+                            location: language,
+                            eventCallback: function() {
+                                if (language !== 'English') {
+                                    window.location = href;
+                                }
                             }
                         });
                     }
@@ -170,8 +177,13 @@
         var callback = function () {
             window.location = href;
         };
-
-        window.trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'Get A Phone Exit', $this.text()], callback);
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'fxos-consumer',
+            interaction: 'Get A Phone Exit',
+            location: $this.text(),
+            eventCallback: callback
+        });
     }
 
     /*
@@ -227,7 +239,13 @@
         };
 
         //track GA event for useful links
-        window.trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'click', this.href], callback);
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'fxos-consumer',
+            interaction: 'click',
+            location: this.href,
+            eventCallback: callback
+        });
     });
 
     $script('//geo.mozilla.org/country.js', function() {

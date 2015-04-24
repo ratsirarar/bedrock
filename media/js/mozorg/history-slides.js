@@ -76,7 +76,6 @@
             interaction: action,
             slide: slideshow.nextFrame[0].id
         });
-        // gaTrack(['_trackEvent', 'mozilla15 SlideShow', action, slideshow.nextFrame[0].id]);
 
         // reset action to autoplay
         action = 'auto';

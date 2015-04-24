@@ -182,7 +182,12 @@ if (typeof Mozilla == 'undefined') {
         this.hideAnnotations();
 
         if (this.tourHasStarted) {
-            gaTrack(['_trackEvent', 'Tour Interaction', 'click', 'Close tour']);
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                event: 'firstrun-tour-interaction',
+                interaction: 'click',
+                browserAction: 'Close tour'
+            });
         }
 
         this.$mask.addClass('out');

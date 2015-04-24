@@ -231,7 +231,6 @@ if (typeof window.Mozilla === 'undefined') {
                     countryCode: COUNTRY_CODE,
                     nonInteraction: true
                 });
-                gaTrack(['_trackEvent', '/os/devices/ Interactions', 'drop-down menu', COUNTRY_CODE, 0, true]);
                 selectDevicesAndSetPartnerContent();
             }
         });

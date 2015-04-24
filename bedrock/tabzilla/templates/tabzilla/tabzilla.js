@@ -357,8 +357,16 @@ var Tabzilla = (function (Tabzilla) {
         // The 5th value and 6th nonInteraction parameters are optional.
         // See the Google Analytics Developer Guide for details:
         // https://developers.google.com/analytics/devguides/collection/gajs/eventTrackerGuide
-        window.gaTrack(['_trackEvent', 'Tabzilla - ' + this.name, action,
-                          label, value || 0, nonInteraction || false], callback);
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'tabzilla-infobar-interaction',
+            elementName: this.name,
+            interaction: action,
+            location: label,
+            eventValue: value,
+            nonInteraction: nonInteraction,
+            eventCallback: callback
+        });
     };
     Infobar.prototype.onshow = {};
     Infobar.prototype.onaccept = {};

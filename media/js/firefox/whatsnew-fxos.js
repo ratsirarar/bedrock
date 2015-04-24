@@ -3,11 +3,14 @@
         e.preventDefault();
 
         var href = this.href;
-
-        gaTrack([
-            '_trackEvent','/whatsnew Interactions','button click',
-            'Learn more about Firefox OS'], function() {
-                window.location = href;
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: 'whatsnew-interaction',
+          interaction: 'button click',
+          browserAction: 'Learn more about Firefox OS',
+          eventCallback: function() {
+            window.location = href;
+          }
         });
     });
 })(window.jQuery);

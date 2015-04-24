@@ -74,8 +74,6 @@
 
                         // DOM may not be ready yet, so bind filtered click handler to document
                         $document.on('click', '#refresh-firefox', function() {
-                            // gaTrack(['_trackEvent', '/new Interaction', 'Refresh Firefox', 'Firefox Desktop']);
-
                             uiTourSendEvent('resetFirefox');
                         });
                     }
@@ -112,8 +110,12 @@
             state = 'Desktop, Firefox not up-to-date';
         }
     }
-    // window.dataLayer = window.dataLayer || [];
-    // window.gaTrack(['_setCustomVar', 4, '/new conditional message', state, 3]);
+    //GA Custom Dimension in Pageview
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+        event: 'set-state',
+        state: state
+    });
 
     // conditions in which scene2 should not be shown, even when the
     // #download-fx hash is set
@@ -135,26 +137,6 @@
             var $downloadButtonLinks = $('.download-button-wrapper .download-other-desktop').detach();
             $downloadButtonLinks.css('display', 'block').insertBefore('#firefox-screenshot');
         }
-
-        // // Add external link tracking, excluding links in Tabzilla that will be
-        // // logged in tabzilla.js
-        // $('#outer-wrapper').on('click', 'a', function(e) {
-        //     // only track off-site links and don't track download.mozilla.org links
-        //     if (this.hostname && this.hostname !== location.hostname && this.hostname !== 'download.mozilla.org') {
-        //         var newTab = (this.target === '_blank' || e.metaKey || e.ctrlKey);
-        //         var href = this.href;
-        //         var callback = function() {
-        //             window.location = href;
-        //         };
-
-        //         if (newTab) {
-        //             gaTrack(['_trackEvent', '/new Interaction', 'click', href]);
-        //         } else {
-        //             e.preventDefault();
-        //             gaTrack(['_trackEvent', '/new Interaction', 'click', href], callback);
-        //         }
-        //     }
-        // });
 
         if (site.platform === 'android') {
             $('#download-button-android .download-subtitle').html(
