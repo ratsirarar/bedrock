@@ -51,15 +51,16 @@
     // listen for events in/on Hello menu
     var bindHelloObserver = function() {
         Mozilla.UITour.observe(function(e) {
+            w.dataLayer = w.dataLayer || [];
             switch (e) {
                 case 'Loop:ChatWindowOpened':
-                    w.gaTrack({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'StartConversation-NoTour'});
+                    w.dataLayer.push({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'StartConversation-NoTour'});
                     break;
                 case 'Loop:RoomURLCopied':
-                    w.gaTrack({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'URLCopied-NoTour'});
+                    w.dataLayer.push({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'URLCopied-NoTour'});
                     break;
                 case 'Loop:RoomURLEmailed':
-                    w.gaTrack({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'URLEmailed-NoTour'});
+                    w.dataLayer.push({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'URLEmailed-NoTour'});
                     break;
             }
         });
@@ -91,10 +92,12 @@
             var newTab = (this.target === '_blank' || e.metaKey || e.ctrlKey);
             var href = this.href;
             if (newTab) {
-                w.gaTrack({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': eventName});
+                w.dataLayer = w.dataLayer || [];
+                w.dataLayer.push({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': eventName});
             } else {
                 e.preventDefault();
-                w.gaTrack({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': eventName}, function() {
+                w.dataLayer = w.dataLayer || [];
+                w.dataLayer.push({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': eventName}, function() {
                     w.location = href;
                 });
             }
@@ -149,7 +152,8 @@
                                 Mozilla.UITour.hideMenu('loop');
                             });
 
-                            w.gaTrack({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'Open'});
+                            w.dataLayer = w.dataLayer || [];
+                            w.dataLayer.push({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'Open'});
 
                             // hide the hello panel when browser resizes due to
                             // https://bugzilla.mozilla.org/show_bug.cgi?id=1091785
@@ -165,13 +169,15 @@
                     // enable/disable listeners when document visibility changes
                     $document.on('visibilitychange', handleVisibilityChange);
 
-                    w.gaTrack({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'EligibleView'});
+                    w.dataLayer = w.dataLayer || [];
+                    w.dataLayer.push({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'EligibleView'});
                 } else {
                     // if Hello is not in toolbar/menu, change footer button to link
                     // to a SUMO article and do some GA tracking
                     addLinkEvent('#try-hello-footer', 'IneligibleClick');
 
-                    w.gaTrack({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'IneligibleView'});
+                    w.dataLayer = w.dataLayer || [];
+                    w.dataLayer.push({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'IneligibleView'});
                 }
             });
         } else {
@@ -205,7 +211,8 @@
     });
 
     $video.on('play', function() {
-        w.gaTrack({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'PlayVideo'});
+        w.dataLayer = w.dataLayer || [];
+        w.dataLayer.push({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'PlayVideo'});
     });
 
     Mozilla.FxFamilyNav.init({ primaryId: 'desktop', subId: 'hello' });
