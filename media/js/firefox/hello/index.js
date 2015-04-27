@@ -51,15 +51,16 @@
     // listen for events in/on Hello menu
     var bindHelloObserver = function() {
         Mozilla.UITour.observe(function(e) {
+            w.dataLayer = w.dataLayer || [];
             switch (e) {
                 case 'Loop:ChatWindowOpened':
-                    w.gaTrack({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'StartConversation-NoTour'});
+                    w.dataLayer.push({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'StartConversation-NoTour'});
                     break;
                 case 'Loop:RoomURLCopied':
-                    w.gaTrack({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'URLCopied-NoTour'});
+                    w.dataLayer.push({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'URLCopied-NoTour'});
                     break;
                 case 'Loop:RoomURLEmailed':
-                    w.gaTrack({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'URLEmailed-NoTour'});
+                    w.dataLayer.push({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'URLEmailed-NoTour'});
                     break;
             }
         });
@@ -90,11 +91,12 @@
         $(linkSelector).on('click', function(e) {
             var newTab = (this.target === '_blank' || e.metaKey || e.ctrlKey);
             var href = this.href;
+            w.dataLayer = w.dataLayer || [];
             if (newTab) {
-                w.gaTrack({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': eventName});
+                w.dataLayer.push({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': eventName});
             } else {
                 e.preventDefault();
-                w.gaTrack({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': eventName}, function() {
+                w.dataLayer.push({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': eventName}, function() {
                     w.location = href;
                 });
             }
@@ -124,6 +126,7 @@
 
             // see if Hello is an available target in toolbar/overflow/customize menu
             Mozilla.UITour.getConfiguration('availableTargets', function(config) {
+                w.dataLayer = w.dataLayer || [];
                 // 'loop' is the snazzy internal code name for Hello
                 if (config.targets && config.targets.indexOf('loop') > -1) {
                     // show the intro try hello button
@@ -135,6 +138,7 @@
                     // clicking either 'try Hello' button (intro/footer) will open the Hello menu
                     $('.try-hello').on('click', function(e) {
                         e.preventDefault();
+                        w.dataLayer = w.dataLayer || [];
 
                         // (bug 1115227, bug 1130194) pass source to FTU; limit to set values.
                         if (tourSource === 'twitter' || tourSource === 'facebook' || tourSource === 'wiki' || tourSource === 'email') {
@@ -149,7 +153,7 @@
                                 Mozilla.UITour.hideMenu('loop');
                             });
 
-                            w.gaTrack({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'Open'});
+                            w.dataLayer.push({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'Open'});
 
                             // hide the hello panel when browser resizes due to
                             // https://bugzilla.mozilla.org/show_bug.cgi?id=1091785
@@ -165,13 +169,13 @@
                     // enable/disable listeners when document visibility changes
                     $document.on('visibilitychange', handleVisibilityChange);
 
-                    w.gaTrack({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'EligibleView'});
+                    w.dataLayer.push({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'EligibleView'});
                 } else {
                     // if Hello is not in toolbar/menu, change footer button to link
                     // to a SUMO article and do some GA tracking
                     addLinkEvent('#try-hello-footer', 'IneligibleClick');
 
-                    w.gaTrack({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'IneligibleView'});
+                    w.dataLayer.push({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'IneligibleView'});
                 }
             });
         } else {
@@ -205,7 +209,8 @@
     });
 
     $video.on('play', function() {
-        w.gaTrack({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'PlayVideo'});
+        w.dataLayer = w.dataLayer || [];
+        w.dataLayer.push({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'PlayVideo'});
     });
 
     Mozilla.FxFamilyNav.init({ primaryId: 'desktop', subId: 'hello' });
