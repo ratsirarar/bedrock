@@ -91,12 +91,11 @@
         $(linkSelector).on('click', function(e) {
             var newTab = (this.target === '_blank' || e.metaKey || e.ctrlKey);
             var href = this.href;
+            w.dataLayer = w.dataLayer || [];
             if (newTab) {
-                w.dataLayer = w.dataLayer || [];
                 w.dataLayer.push({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': eventName});
             } else {
                 e.preventDefault();
-                w.dataLayer = w.dataLayer || [];
                 w.dataLayer.push({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': eventName}, function() {
                     w.location = href;
                 });
@@ -127,6 +126,7 @@
 
             // see if Hello is an available target in toolbar/overflow/customize menu
             Mozilla.UITour.getConfiguration('availableTargets', function(config) {
+                w.dataLayer = w.dataLayer || [];
                 // 'loop' is the snazzy internal code name for Hello
                 if (config.targets && config.targets.indexOf('loop') > -1) {
                     // show the intro try hello button
@@ -138,6 +138,7 @@
                     // clicking either 'try Hello' button (intro/footer) will open the Hello menu
                     $('.try-hello').on('click', function(e) {
                         e.preventDefault();
+                        w.dataLayer = w.dataLayer || [];
 
                         // (bug 1115227, bug 1130194) pass source to FTU; limit to set values.
                         if (tourSource === 'twitter' || tourSource === 'facebook' || tourSource === 'wiki' || tourSource === 'email') {
@@ -152,7 +153,6 @@
                                 Mozilla.UITour.hideMenu('loop');
                             });
 
-                            w.dataLayer = w.dataLayer || [];
                             w.dataLayer.push({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'Open'});
 
                             // hide the hello panel when browser resizes due to
@@ -169,14 +169,12 @@
                     // enable/disable listeners when document visibility changes
                     $document.on('visibilitychange', handleVisibilityChange);
 
-                    w.dataLayer = w.dataLayer || [];
                     w.dataLayer.push({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'EligibleView'});
                 } else {
                     // if Hello is not in toolbar/menu, change footer button to link
                     // to a SUMO article and do some GA tracking
                     addLinkEvent('#try-hello-footer', 'IneligibleClick');
 
-                    w.dataLayer = w.dataLayer || [];
                     w.dataLayer.push({'event': 'hello-interactions', 'category': '/hello interactions', 'location': 'productPage', 'browserAction': 'IneligibleView'});
                 }
             });
