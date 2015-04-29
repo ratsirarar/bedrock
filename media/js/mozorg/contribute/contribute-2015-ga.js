@@ -155,21 +155,15 @@ $(function () {
     });
 
     // Track other actions on landing page
+    $('.landing-notready .other-actions a')
+        .attr('data-element-location', 'not ready');
     $('.landing-notready .other-actions a').on('click', function(e) {
-        var label = $(this).data('label');
+        e.preventDefault();
         var href = this.href;
         var callback = function() {
             window.open(href);
         };
-
-        e.preventDefault();
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-            event: 'contribute-landing-interactions',
-            browserAction: 'Not Ready to Dive in Just Yet',
-            location: label,
-            eventCallback: callback
-        });
+        callback();
     });
 
     // Track other actions on confirmation page
