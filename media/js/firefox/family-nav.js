@@ -40,7 +40,7 @@ if (typeof window.Mozilla === 'undefined') {
     } catch (ex) {}
     navVersion = 'Version ' + ((showV1 === 'yes') ? '1' : '2');
     window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({event: 'page-load', navVersion: navVersion});
+    window.dataLayer.push({event: 'nav-page-load', navVersion: navVersion});
 
     // as one of the navs will be removed after testing, i thought it better
     // to keep each nav's JS separate (even though some code is duplicated)

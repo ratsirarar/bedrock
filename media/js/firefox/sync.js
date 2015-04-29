@@ -31,7 +31,6 @@
 
     // Variations 1-5 are Firefox
     if (window.isFirefox()) {
-
         // Variation #5: Firefox for Android
         if (window.isFirefoxMobile()) {
 
@@ -92,7 +91,7 @@
 
     // Send page state to GA if it hasn't already been sent in the
     // getConfiguration callback
-        if (syncCapable === false) {
+    if (syncCapable === false) {
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({
             event: 'page-load',
