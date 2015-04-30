@@ -186,6 +186,7 @@ PIPELINE_CSS = {
     'contentservices': {
         'source_filenames': (
             'css/sandstone/video-resp.less',
+            'css/base/mozilla-accordion.less',
             'css/mozorg/contentservices.less',
         ),
         'output_filename': 'css/contentservices-bundle.css',
