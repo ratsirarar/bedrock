@@ -17,6 +17,7 @@ from waffle.decorators import waffle_switch
 latest_re = r'^firefox(?:/(?P<version>%s))?/%s/$'
 firstrun_re = latest_re % (version_re, 'firstrun')
 whatsnew_re = latest_re % (version_re, 'whatsnew')
+whatsnew_re_b = latest_re % (version_re, 'whatsnew/b')
 tour_re = latest_re % (version_re, 'tour')
 hello_start_re = latest_re % (version_re, 'hello/start')
 platform_re = '(?P<platform>android)'
@@ -50,6 +51,7 @@ urlpatterns = patterns('',
     page('firefox/sync', 'firefox/sync.html'),
     page('firefox/tiles', 'firefox/tiles.html'),
     page('firefox/unsupported-systems', 'firefox/unsupported-systems.html'),
+    page('firefox/mobile', 'firefox/mobile/index.html'),
     page('firefox/new', 'firefox/new.html', decorators=xframe_allow),
     page('firefox/organizations/faq', 'firefox/organizations/faq.html'),
     page('firefox/organizations', 'firefox/organizations/organizations.html'),
@@ -66,6 +68,7 @@ urlpatterns = patterns('',
     url('^firefox/dnt/$', views.dnt, name='firefox.dnt'),
     url(firstrun_re, views.FirstrunView.as_view(), name='firefox.firstrun'),
     url(whatsnew_re, views.WhatsnewView.as_view(), name='firefox.whatsnew'),
+    url(whatsnew_re_b, views.WhatsnewViewTest.as_view(), name='firefox.whatsnew.b'),
     url(tour_re, views.TourView.as_view(), name='firefox.tour'),
     url(hello_start_re, views.HelloStartView.as_view(), name='firefox.hello.start'),
     url(r'^firefox/partners/$', views.firefox_partners,

@@ -1,0 +1,63 @@
+{# This Source Code Form is subject to the terms of the Mozilla Public
+ # License, v. 2.0. If a copy of the MPL was not distributed with this
+ # file, You can obtain one at http://mozilla.org/MPL/2.0/. -#}
+
+{% extends "firefox/whatsnew_38/whatsnew-base.html" %}
+
+{% add_lang_files "firefox/whatsnew_38" %}
+
+{% block optimizely %}
+  {% if waffle.switch('firefox-whatsnew-optimizely') %}
+    {% include 'includes/optimizely.html' %}
+  {% endif %}
+{% endblock %}
+
+{% block site_css %}
+  {% stylesheet 'firefox_whatsnew_38_a' %}
+{% endblock %}
+
+{% block page_title %}{{ _('Keep your favorite things at your fingertips.') }}{% endblock %}
+
+{% block body_id %}whatsnew-38-a{% endblock %}
+{% block body_class %}{% endblock %}
+
+{% block content %}
+<main role="main">
+  <section id="video-content">
+    <h1>{{ _('From our hands to yours') }}</h1>
+    <p class="tagline">{{ _('Firefox is built from the heart by thousands who believe in personal freedom on the Web.') }}</p>
+    <a class="video-thumbnail" href="{{ fx_38_video_url}}.mp4">
+      <span>{{ _('Watch the video') }}</span>
+    </a>
+    <div class="video-embed">
+      {{ video(fx_38_video_url + '.mp4', fx_38_video_url + '.webm', id='campaign-video') }}
+    </div>
+  </section>
+  <div id="mobile-content">
+    <section class="direct-store-links" data-alt-android="{{_('Get Firefox for Android')}}">
+      <header>
+        <h2>{{ _('Keep your favorite things at your fingertips.') }}</h2>
+        <p>{{ _('Add Firefox to your smartphone or tablet.') }}</p>
+      </header>
+      <div class="dl-wrapper">
+        <ul>
+          <li>
+            <a rel="external" href="#" data-alt="{{ _('Get Firefox for iOS') }}">
+              <img src="{{ l10n_img('firefox/ios/btn-app-store.svg') }}" width="152" height="45" alt="{{ _('Download on the App Store') }}">
+            </a>
+          </li>
+          <li>
+            <a rel="external" href="{{ settings.GOOGLE_PLAY_FIREFOX_LINK }}">
+              {{ high_res_img('firefox/android/btn-google-play.png', {'alt': 'Get it on Google Play', 'width': '129', 'height': '45', 'l10n': True}) }}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </div>
+</main>
+{% endblock %}
+
+{% block js %}
+  {% javascript 'firefox_whatsnew_38_a' %}
+{% endblock %}
