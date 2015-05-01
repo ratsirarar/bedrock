@@ -1023,6 +1023,13 @@ PIPELINE_CSS = {
         ),
         'output_filename': 'css/styleguide-docs-mozilla-pager-bundle.css',
     },
+    'styleguide-docs-send-to-device': {
+        'source_filenames': (
+            'css/sandstone/sandstone-resp.less',
+            'css/base/send-to-device.less',
+        ),
+        'output_filename': 'css/styleguide-docs-send-to-device-bundle.css',
+    },
     'tabzilla': {
         'source_filenames': (
             'css/tabzilla/tabzilla.less',
@@ -1838,6 +1845,13 @@ PIPELINE_JS = {
         ),
         'output_filename': 'js/styleguide-docs-mozilla-pager-bundle.js',
     },
+    'styleguide-docs-send-to-device': {
+        'source_filenames': (
+            'js/base/send-to-device.js',
+            'js/styleguide/docs/send-to-device.js',
+        ),
+        'output_filename': 'js/styleguide-docs-send-to-device-bundle.js',
+    },
     'video': {
         'source_filenames': (
             'js/base/mozilla-video-tools.js',
@@ -2409,6 +2423,14 @@ GOOGLE_PLAY_FIREFOX_LINK = ('https://play.google.com/store/apps/details?' +
                             'id=org.mozilla.firefox&referrer=' +
                             urlquote('utm_source=mozilla&utm_medium=Referral&'
                                         'utm_campaign=mozilla-org'))
+
+# Link to Firefox for iOS on the App Store store
+IOS_APP_STORE_FIREFOX_LINK = ('https://www.youtube.com/watch?v=oHg5SJYRHA0')
+
+# Locales that should display the 'Send to Device' widget
+SEND_TO_DEVICE_LOCALES = ['de', 'en-GB', 'en-US', 'en-ZA',
+                          'es-AR', 'es-CL', 'es-ES', 'es-MX',
+                          'fr', 'hu', 'id', 'pl', 'pt-BR', 'ru']
 
 # Use bedrock Gruntfile.js for live reload
 USE_GRUNT_LIVERELOAD = False
