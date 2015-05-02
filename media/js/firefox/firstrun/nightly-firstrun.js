@@ -5,23 +5,5 @@
 ;(function($) {
     'use strict';
 
-    $('#nightly-box a').on('click', function(e) {
-        e.preventDefault();
 
-        var href = this.href;
-
-        gaTrack(['_trackEvent', 'Nightly Firstrun Interactions', 'button click', href], function() {
-            window.location = href;
-        });
-    });
-
-    $('main > .blue-box a').on('click', function(e) {
-        e.preventDefault();
-
-        var href = this.href;
-
-        gaTrack(['_trackEvent', 'Nightly Firstrun Interactions', 'link click', href], function() {
-            window.location = href;
-        });
-    });
 })(window.jQuery);

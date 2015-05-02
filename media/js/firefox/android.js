@@ -275,29 +275,31 @@
         }
     }
 
-    var trackClick = function (gaArgs, event) {
+    var trackClick = function (gaObj, event) {
+        window.dataLayer = window.dataLayer || [];
         if (event.metaKey || event.ctrlKey) {
             // Open link in new tab
-            gaTrack(gaArgs);
+            window.dataLayer.push(gaObj);
         } else {
             event.preventDefault();
-            gaTrack(gaArgs, function() { window.location = event.target.href; });
+            gaObj.eventCallback = function() { window.location = event.target.href;};
+            window.window.dataLayer.push(gaObj);
         }
     };
 
     // track link on the primary CTA
     $('#intro .dl-button').on('click', function (event) {
-        trackClick(['_trackEvent', 'Firefox Downloads', 'download click', 'Firefox for Android'], event);
+        trackClick({event: 'firefox-downloads', interaction: 'download click', downloadVersion: 'Firefox for Android'}, event);
     });
 
     // track link on the secondary CTA
     $('#subscribe-download-wrapper .dl-button').on('click', function(event) {
-        trackClick(['_trackEvent', 'Firefox Downloads', 'bottom download click', 'Firefox for Android'], event);
+        trackClick({event: 'firefox-downloads', interaction: 'button download click', downloadVersion: 'Firefox for Android'}, event);
     });
 
     // track links except the accordion
     $('#privacy, #sync, #subscribe-download-wrapper ul').on('click', 'a', function(event) {
-        trackClick(['_trackEvent', '/android/ Interactions', 'link click', $(this).attr('href')], event);
+        trackClick({event: 'firefox-downloads', interaction: 'link click', downloadVersion: $(this).attr('href')}, event);
     });
 
     // track accordion interactions
@@ -312,29 +314,13 @@
             'screencast': 'Take it to the big screen'
         }[$(this).attr('id')];
 
-        $(this).on('expand', '[role="tabpanel"]', function() {
-            gaTrack(['_trackEvent', '/android/ Interactions', 'open', section]);
-        }).on('collapse', '[role="tabpanel"]', function() {
-            gaTrack(['_trackEvent', '/android/ Interactions', 'close', section]);
-        }).on('click', 'a', function(event) {
-            interaction = $(this).hasClass('see-how') ? 'see how it works link click' : 'learn more link click';
-            trackClick(['_trackEvent', '/android/ Interactions', interaction, section], event);
-        });
     });
 
-    // track scroll
+    //scroll tracking
     $('#wrapper > *').waypoint(function(direction) {
-        var section = {
-            'customize': 'Uniquely yours',
-            'privacy': 'Keep your private info private',
-            'sync': 'Don’t leave home without being in Sync',
-            'subscribe-download-wrapper': 'Choose Firefox Footer'
-        }[$(this).attr('id')];
 
-        if (section && direction === 'down') {
-            gaTrack(['_trackEvent', '/android/ Interactions', 'scroll', section]);
-        }
     });
+
 
     // document ready stuff
     $(function() {

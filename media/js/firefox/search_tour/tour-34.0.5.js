@@ -53,7 +53,6 @@
         Mozilla.UITour.setSearchTerm('Firefox');
         Mozilla.UITour.openSearchPanel(function() {});
         Mozilla.UITour.setTreatmentTag('srch-chg-action', 'Try');
-        gaTrack(['_trackEvent', 'whatsnew srch-chg interactions', _trackingID, 'Try']);
     }
 
     /*
@@ -63,7 +62,6 @@
         doorhangerClosed = true;
         $document.off('visibilitychange', handleVisibilityChange);
         Mozilla.UITour.setTreatmentTag('srch-chg-action', 'Close');
-        gaTrack(['_trackEvent', 'whatsnew srch-chg interactions', _trackingID, 'Close']);
     }
 
     function showPageVariant(variant) {
@@ -97,7 +95,6 @@
 
         Mozilla.UITour.setTreatmentTag('srch-chg-treatment', 'whatsnew_' + _trackingID);
         Mozilla.UITour.setTreatmentTag('srch-chg-action', 'ShowHanger');
-        gaTrack(['_trackEvent', 'whatsnew srch-chg interactions', _trackingID, 'ShowHanger']);
     }
 
     function determinePageVariation() {
@@ -174,12 +171,10 @@
                         if (selectedEngineID && selectedEngineID === 'yahoo') {
                             determinePageVariation();
 
-                            gaTrack(['_trackEvent', 'whatsnew srch-chg interactions', 'All', 'yahooDefault']);
                         } else {
                             // user does not have Yahoo! as default (en-US build user outside of US timezone)
                             Mozilla.UITour.setTreatmentTag('srch-chg-treatment', 'whatsnew_Default');
                             Mozilla.UITour.setTreatmentTag('srch-chg-action', 'ViewPage');
-                            gaTrack(['_trackEvent', 'whatsnew srch-chg interactions', 'All', 'otherDefault']);
                         }
 
                         showForcedDoorhanger();
@@ -189,7 +184,6 @@
                     // searchbar is not present in main browser toolbar
                     Mozilla.UITour.setTreatmentTag('srch-chg-treatment', 'whatsnew_Default');
                     Mozilla.UITour.setTreatmentTag('srch-chg-action', 'ViewPage');
-                    gaTrack(['_trackEvent', 'whatsnew srch-chg interactions', 'All', 'noSearchbox']);
                 }
             }
         });

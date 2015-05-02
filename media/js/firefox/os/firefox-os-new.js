@@ -42,7 +42,12 @@
       });
 
       //track GA event for newsletter CTA
-      gaTrack(['_trackEvent', 'FxOs Consumer Page', 'click', 'Sign Me Up - Primary']);
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'fxos-consumer',
+        interaction: 'click',
+        location: 'Sign Me Up - Primary'
+      });
     });
 
     $('#sign-up-form-close').on('click', function() {
@@ -63,9 +68,13 @@
           allowScroll: !isSmallViewport,
           title: '<img src="' + modalLogo + '" alt="Firefox OS" />'
       });
-
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'fxos-consumer',
+        interaction: 'click',
+        location: 'Get a Phone'
+      });
       //track GA event for get a phone CTA
-      gaTrack(['_trackEvent', 'FxOs Consumer Page', 'click', 'Get a Phone']);
     });
 
     $appGroupSelector.on('click', 'a', function(event) {
@@ -140,11 +149,22 @@
             window.location = href;
         };
 
+        window.dataLayer = window.dataLayer || [];
         if (newTab) {
-            gaTrack(['_trackEvent', 'FxOs Consumer Page', 'Get A Phone Exit', $this.text()]);
+            window.dataLayer.push({
+              event: 'fxos-consumer',
+              interaction: 'Get A Phone Exit',
+              location: $this.text()
+            });
         } else {
             e.preventDefault();
-            gaTrack(['_trackEvent', 'FxOs Consumer Page', 'Get A Phone Exit', $this.text()], callback);
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+              event: 'fxos-consumer',
+              interaction: 'Get A Phone Exit',
+              location: $this.text(),
+              eventCallback: callback
+            });
         }
     }
 

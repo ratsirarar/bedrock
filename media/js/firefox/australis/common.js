@@ -24,11 +24,23 @@
             Mozilla.UITour.showFirefoxAccounts();
         };
 
+        window.dataLayer = window.dataLayer || [];
         if (window.getFirefoxMasterVersion() >= 31) {
-            gaTrack(['_trackEvent', pageId + ' Page Interactions - New Firefox Tour', 'button click', 'Get Started with Sync'], goToAccounts);
+            window.dataLayer.push({
+                event: 'new-firefox-tour',
+                pageName: pageId,
+                interaction: 'button click',
+                location: 'Get Started with Sync',
+                eventCallback: goToAccounts
+            });
         } else {
             window.open(url, '_blank');
-            gaTrack(['_trackEvent', pageId + ' Page Interactions - New Firefox Tour', 'button click', 'Get Started with Sync']);
+            window.dataLayer.push({
+                event: 'new-firefox-tour',
+                pageName: pageId,
+                interaction: 'button click',
+                location: 'Get Started with Sync'            
+            });
         }
     }
 
@@ -37,7 +49,12 @@
         e.preventDefault();
         var url = this.href;
         window.open(url, '_blank');
-        gaTrack(['_trackEvent', pageId + ' Page Interactions - New Firefox Tour', 'link click', url]);
+        window.dataLayer.push({
+                event: 'new-firefox-tour',
+                pageName: pageId,
+                interaction: 'link click',
+                location: url            
+        });
     }
 
     // start in-page animations when user scrolls down from header

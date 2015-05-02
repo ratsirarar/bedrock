@@ -102,6 +102,7 @@
      */
     function toggleLangContentSelector () {
         clearTimeout(langTimer);
+        var href;
 
         if ($langPanel.hasClass('visible')) {
             $langPanel.removeClass('visible');
@@ -144,10 +145,16 @@
                                 sessionStorage.setItem(sessionLangPrefName, 'en-IN');
                             } catch (ex) {}
                         }
-
-                        gaTrack(['_trackEvent', 'FxOs Consumer Page', 'Indian Language Selection', language], function() {
-                            if (language !== 'English') {
-                                window.location = $target.attr('href');
+                        href = $target.attr('href');
+                        window.dataLayer = window.dataLayer || [];
+                        window.dataLayer.push({
+                            event: 'fxos-consumer',
+                            interaction: 'Indian Language Selection',
+                            location: language,
+                            eventCallback: function() {
+                                if (language !== 'English') {
+                                    window.location = href;
+                                }
                             }
                         });
                     }
@@ -170,8 +177,13 @@
         var callback = function () {
             window.location = href;
         };
-
-        trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'Get A Phone Exit', $this.text()], callback);
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'fxos-consumer',
+            interaction: 'Get A Phone Exit',
+            location: $this.text(),
+            eventCallback: callback
+        });
     }
 
     /*
@@ -212,28 +224,6 @@
         }
     }
 
-    window.trackGAEvent = function (eventsArray, callback) {
-        if (!pause_ga_tracking) {
-            var timer = null;
-            var hasCallback = typeof(callback) == 'function';
-            var gaCallback = function () {
-                clearTimeout(timer);
-                callback();
-            };
-
-            if (typeof(window._gaq) == 'object') {
-                if (hasCallback) {
-                    timer = setTimeout(gaCallback, 500);
-                    window._gaq.push(eventsArray, gaCallback);
-                } else {
-                    window._gaq.push(eventsArray);
-                }
-            } else if (hasCallback) {
-                callback();
-            }
-        }
-    };
-
     $('#useful-links').on('click', 'a', function (e) {
         e.preventDefault();
         var that = this;
@@ -242,7 +232,13 @@
         };
 
         //track GA event for useful links
-        trackGAEvent(['_trackEvent', 'FxOs Consumer Page', 'click', this.href], callback);
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'fxos-consumer',
+            interaction: 'click',
+            location: this.href,
+            eventCallback: callback
+        });
     });
 
     $script('//geo.mozilla.org/country.js', function() {

@@ -66,15 +66,23 @@
         // Show/hide the additional content and track the clicks
         $toggle_button.on('click', function() {
             $more.slideToggle('fast', function() {
+                window.dataLayer = window.dataLayer || [];
                 if ($more.is(':visible')) {
                     $toggle_button.addClass('open').text(window.trans('less'));
                     $(this).removeAttr('aria-hidden');
-                    gaTrack(['_trackEvent', 'Mozillian Stories Interactions', person + ' - more']);
-
+                    window.dataLayer.push({
+                        event: 'mozillian-stories-interaction',
+                        browserAction: person + ' - more',
+                        location: 'main'
+                    });
                 } else {
                     $toggle_button.removeClass('open').text(window.trans('more'));
                     $(this).attr('aria-hidden', 'true');
-                    gaTrack(['_trackEvent', 'Mozillian Stories Interactions', person + ' - less']);
+                    window.dataLayer.push({
+                        event: 'mozillian-stories-interaction',
+                        browserAction: person + ' - less',
+                        location: 'main'
+                    });
                 }
             });
         });
@@ -104,7 +112,10 @@
             }, 400);
             // Track when the video ends
             $video.on('ended', function() {
-                gaTrack(['_trackEvent', '/contribute Interactions', 'Video Interactions', 'Video ended']);
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    event: 'contribute-video-ended'
+                });
             });
         }
     };
@@ -218,7 +229,11 @@
         var target = $(this).attr('href').replace( /.*?(#.*)/g, "$1" );
         $('<div class="tooltip arrow-top">'+ $(target + ' p').text() +'</div>').insertAfter($this).fadeIn('fast');
         // Track tooltips
-        gaTrack(['_trackEvent', 'Contribute Signup Tooltip Interactions', $(target).prop('id'), 'Info tooltip']);
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'contribute-tooltip-interaction',
+            location: $(target).prop('id')
+        });
     });
 
     $tooltips.on('mouseleave blur', function() {

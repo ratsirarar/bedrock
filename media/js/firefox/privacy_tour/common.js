@@ -66,8 +66,12 @@
                         Mozilla.FirefoxAnniversaryVideo.hideEmbed();
                     }
                 });
-
-                gaTrack(['_trackEvent', '/firefox/independent/ Interactions', 'click to play', '10th Anniversary Video']);
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    event: 'video-interaction',
+                    interaction: 'click to play',
+                    videoTitle: '10th Anniversary'
+                });
             } else {
                 // ensure video is still accessible if tour has not initialized
                 window.location.href = $('a.button-play').attr('href');
@@ -77,7 +81,12 @@
         'onComplete': function() {
             // YouTube player loses this callback for some reason when re-initializing after being
             // moved in the DOM. Leaving this here for future reference.
-            gaTrack(['_trackEvent', '/firefox/independent/ Interactions', 'Finish', '10th Anniversary Video']);
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                event: 'video-interaction',
+                interaction: 'Finish',
+                videoTitle: '10th Anniversary'
+            });
         }
     });
 })(window.jQuery, window.Mozilla);

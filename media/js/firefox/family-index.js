@@ -39,12 +39,12 @@
         var callback = function() {
             window.location = href;
         };
-
+        window.dataLayer = window.dataLayer || [];
         if (newTab) {
-            gaTrack(['_trackEvent', '/firefox/products/ Interactions', 'product click', product]);
+            window.dataLayer.push({event: 'products-interactions', interaction: 'product click', productName: product});
         } else {
             e.preventDefault();
-            gaTrack(['_trackEvent', '/firefox/products/ Interactions', 'product click', product], callback);
+            window.dataLayer.push({event: 'products-interactions', interaction: 'product click', productName: product, eventCallback: callback});
         }
     });
 
@@ -56,12 +56,12 @@
         var callback = function() {
             window.location = href;
         };
-
+        window.dataLayer = window.dataLayer || [];
         if (newTab) {
-            gaTrack(['_trackEvent', '/firefox/products/ Interactions', 'Firefox downloads', product]);
+            window.dataLayer.push({event: 'products-interactions', interaction: 'Firefox downloads', productName: product});
         } else {
             e.preventDefault();
-            gaTrack(['_trackEvent', '/firefox/products/ Interactions', 'Firefox downloads', product], callback);
+            window.dataLayer.push({event: 'products-interactions', interaction: 'Firefox downloads', productName: product, eventCallback: callback});
         }
     });
 

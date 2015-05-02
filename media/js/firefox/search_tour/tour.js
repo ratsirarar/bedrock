@@ -61,7 +61,12 @@
         Mozilla.UITour.setSearchTerm('Firefox');
         Mozilla.UITour.openSearchPanel(function() {});
         Mozilla.UITour.setTreatmentTag('srch-chg-action', 'Try');
-        gaTrack(['_trackEvent', 'whatsnew srch-chg interactions', _trackingID, 'Try']);
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'whatsnew-search-interaction',
+            interaction: _trackingID,
+            broswerAction: 'Try'
+        });
     }
 
     /*
@@ -71,7 +76,12 @@
         doorhangerClosed = true;
         $document.off('visibilitychange', handleVisibilityChange);
         Mozilla.UITour.setTreatmentTag('srch-chg-action', 'Close');
-        gaTrack(['_trackEvent', 'whatsnew srch-chg interactions', _trackingID, 'Close']);
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'whatsnew-search-interaction',
+            interaction: _trackingID,
+            broswerAction: 'Close'
+        });
     }
 
     /*
@@ -117,7 +127,12 @@
         Mozilla.UITour.setSearchTerm('Firefox');
         Mozilla.UITour.openSearchPanel(function() {});
         Mozilla.UITour.setTreatmentTag('srch-chg-action', 'Switch');
-        gaTrack(['_trackEvent', 'whatsnew srch-chg interactions', _trackingID, 'Switch']);
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'whatsnew-search-interaction',
+            interaction: _trackingID,
+            broswerAction: 'Switch'
+        });
     }
 
     /*
@@ -127,7 +142,12 @@
         doorhangerClosed = true;
         $document.off('visibilitychange', handleVisibilityChange);
         Mozilla.UITour.setTreatmentTag('srch-chg-action', 'Close');
-        gaTrack(['_trackEvent', 'whatsnew srch-chg interactions', _trackingID, 'Close']);
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'whatsnew-search-interaction',
+            interaction: _trackingID,
+            broswerAction: 'Close'
+        });
     }
 
     function showPageVariant(variant) {
@@ -161,7 +181,12 @@
 
         Mozilla.UITour.setTreatmentTag('srch-chg-treatment', 'whatsnew_' + _trackingID);
         Mozilla.UITour.setTreatmentTag('srch-chg-action', 'ShowHanger');
-        gaTrack(['_trackEvent', 'whatsnew srch-chg interactions', _trackingID, 'ShowHanger']);
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'whatsnew-search-interaction',
+            interaction: _trackingID,
+            broswerAction: 'ShowHanger'
+        });
     }
 
     function determinePageVariation() {
@@ -302,30 +327,54 @@
                                 } else {
                                     Mozilla.UITour.setTreatmentTag('srch-chg-treatment', 'whatsnew_Default');
                                     Mozilla.UITour.setTreatmentTag('srch-chg-action', 'ViewPage');
-                                    gaTrack(['_trackEvent', 'whatsnew srch-chg interactions', 'Default', 'ViewPage']);
+                                    window.dataLayer = window.dataLayer || [];
+                                    window.dataLayer.push({
+                                        event: 'whatsnew-search-interaction',
+                                        interaction: 'Default',
+                                        broswerAction: 'ViewPage'
+                                    });
                                 }
-
-                                gaTrack(['_trackEvent', 'whatsnew srch-chg interactions', 'All', 'otherDefault']);
+                                window.dataLayer = window.dataLayer || [];
+                                window.dataLayer.push({
+                                    event: 'whatsnew-search-interaction',
+                                    interaction: 'All',
+                                    broswerAction: 'otherDefault'
+                                });
 
                             } else {
                                 // user already has yahoo as default
                                 Mozilla.UITour.setTreatmentTag('srch-chg-treatment', 'whatsnew_Default');
                                 Mozilla.UITour.setTreatmentTag('srch-chg-action', 'ViewPage');
-                                gaTrack(['_trackEvent', 'whatsnew srch-chg interactions', 'All', 'yahooDefault']);
+                                window.dataLayer = window.dataLayer || [];
+                                window.dataLayer.push({
+                                    event: 'whatsnew-search-interaction',
+                                    interaction: 'All',
+                                    broswerAction: 'yahooDefault'
+                                });
                             }
                         });
                     } else {
                         // searchbar is not present in main browser toolbar
                         Mozilla.UITour.setTreatmentTag('srch-chg-treatment', 'whatsnew_Default');
                         Mozilla.UITour.setTreatmentTag('srch-chg-action', 'ViewPage');
-                        gaTrack(['_trackEvent', 'whatsnew srch-chg interactions', 'All', 'noSearchbox']);
+                        window.dataLayer = window.dataLayer || [];
+                        window.dataLayer.push({
+                            event: 'whatsnew-search-interaction',
+                            interaction: 'All',
+                            broswerAction: 'noSearchbox'
+                        });
                     }
                 }
             });
         } else {
             Mozilla.UITour.setTreatmentTag('srch-chg-treatment', 'whatsnew_Default');
             Mozilla.UITour.setTreatmentTag('srch-chg-action', 'ViewPage');
-            gaTrack(['_trackEvent', 'whatsnew srch-chg interactions', 'Default', 'ViewPage']);
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                event: 'whatsnew-search-interaction',
+                interaction: 'Default',
+                broswerAction: 'ViewPage'
+            });
         }
 
         Mozilla.UITour.registerPageID(pageId);
