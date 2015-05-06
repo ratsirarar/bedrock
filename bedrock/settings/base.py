@@ -1153,7 +1153,7 @@ PIPELINE_JS = {
             'js/mozorg/content-services-form.js',
             'js/base/mozilla-input-placeholder.js',
         ),
-        'output_filename': 'js/partnerships-bundle.js',
+        'output_filename': 'js/content-services-form-bundle.js',
     },
 
     'contribute-faces': {
